@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Film, Heart, Search, Menu, X, Clock, Users } from 'lucide-react';
+import { Film, Heart, Search, Menu, X, Clock, Users, Hammer } from 'lucide-react';
 import { useFavoritesStore } from '@/store/useFavoritesStore';
 import { useCharacterCollectionStore } from '@/store/useCharacterCollectionStore';
 
@@ -28,6 +28,7 @@ export const Navbar = () => {
     { path: '/', label: '大厅', icon: Film },
     { path: '/time-corridor', label: '时间长廊', icon: Clock },
     { path: '/characters', label: '角色博物馆', icon: Users },
+    { path: '/workshop', label: '制作工坊', icon: Hammer },
     { path: '/era/80s', label: '80年代', color: 'text-80s-primary' },
     { path: '/era/90s', label: '90年代', color: 'text-90s-primary' },
     { path: '/era/00s', label: '2000年代', color: 'text-00s-primary' },

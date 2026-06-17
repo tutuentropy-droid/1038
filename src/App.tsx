@@ -11,6 +11,7 @@ import { CharacterDetail } from "@/pages/CharacterDetail";
 import { CharacterBattle } from "@/pages/CharacterBattle";
 import { CharacterLeaderboard } from "@/pages/CharacterLeaderboard";
 import { CharacterCollection } from "@/pages/CharacterCollection";
+import { AnimationWorkshop } from "@/pages/AnimationWorkshop";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="/characters/battle" element={<CharacterBattle />} />
             <Route path="/characters/leaderboard" element={<CharacterLeaderboard />} />
             <Route path="/characters/collection" element={<CharacterCollection />} />
+            <Route path="/workshop" element={<AnimationWorkshop />} />
             <Route path="*" element={
               <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">

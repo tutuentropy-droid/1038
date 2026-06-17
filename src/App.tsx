@@ -12,6 +12,9 @@ import { CharacterBattle } from "@/pages/CharacterBattle";
 import { CharacterLeaderboard } from "@/pages/CharacterLeaderboard";
 import { CharacterCollection } from "@/pages/CharacterCollection";
 import { AnimationWorkshop } from "@/pages/AnimationWorkshop";
+import { TreasureHunt } from "@/pages/TreasureHunt";
+import { AchievementCenter } from "@/pages/AchievementCenter";
+import { NewDiscoveryModal } from "@/components/NewDiscoveryModal";
 
 export default function App() {
   return (
@@ -32,6 +35,8 @@ export default function App() {
             <Route path="/characters/leaderboard" element={<CharacterLeaderboard />} />
             <Route path="/characters/collection" element={<CharacterCollection />} />
             <Route path="/workshop" element={<AnimationWorkshop />} />
+            <Route path="/treasure-hunt" element={<TreasureHunt />} />
+            <Route path="/achievements" element={<AchievementCenter />} />
             <Route path="*" element={
               <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">
@@ -45,6 +50,7 @@ export default function App() {
             } />
           </Routes>
         </main>
+        <NewDiscoveryModal />
       </div>
     </Router>
   );

@@ -108,3 +108,96 @@ export const ERA_INFO: Record<EraType, EraInfo> = {
     pattern: 'cyber'
   }
 };
+
+export interface HiddenCharacter {
+  id: string;
+  characterId: string;
+  location: string;
+  era: EraType;
+  hint: string;
+  rarity: 'common' | 'rare' | 'legendary';
+  points: number;
+}
+
+export interface EasterEgg {
+  id: string;
+  name: string;
+  description: string;
+  location: string;
+  era?: EraType;
+  hint: string;
+  points: number;
+  image?: string;
+  unlockedAt?: number;
+}
+
+export interface SpecialCollection {
+  id: string;
+  name: string;
+  description: string;
+  animeId: string;
+  rarity: 'common' | 'rare' | 'epic' | 'legendary';
+  points: number;
+  image: string;
+  expireAt: number;
+}
+
+export type QuestType = 'find_characters' | 'find_easter_eggs' | 'collect_special' | 'combo_era';
+export type QuestStatus = 'available' | 'in_progress' | 'completed' | 'expired';
+
+export interface Quest {
+  id: string;
+  title: string;
+  description: string;
+  type: QuestType;
+  era?: EraType;
+  targetCount: number;
+  currentProgress: number;
+  targetIds?: string[];
+  reward: {
+    points: number;
+    badge?: string;
+  };
+  status: QuestStatus;
+  expiresAt?: number;
+  completedAt?: number;
+}
+
+export type AchievementRarity = 'bronze' | 'silver' | 'gold' | 'platinum';
+export type AchievementType = 'collector' | 'explorer' | 'hunter' | 'completionist' | 'special';
+
+export interface Achievement {
+  id: string;
+  name: string;
+  description: string;
+  type: AchievementType;
+  rarity: AchievementRarity;
+  icon: string;
+  requirement: {
+    type: 'collect_characters' | 'find_easter_eggs' | 'complete_quests' | 'collect_specials' | 'visits';
+    target: number;
+    era?: EraType;
+  };
+  points: number;
+  unlockedAt?: number;
+}
+
+export interface PlayerStats {
+  totalPoints: number;
+  hiddenCharactersFound: string[];
+  easterEggsFound: string[];
+  specialCollectionsFound: string[];
+  completedQuests: string[];
+  unlockedAchievements: string[];
+  visitCount: number;
+  lastVisit: number;
+  currentStreak: number;
+}
+
+export interface ShareCardData {
+  playerName: string;
+  achievements: Achievement[];
+  stats: PlayerStats;
+  favoriteEra?: EraType;
+  generatedAt: number;
+}

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Film, Heart, Search, Menu, X, Clock, Users, Hammer } from 'lucide-react';
+import { Film, Heart, Search, Menu, X, Clock, Users, Hammer, Search as SearchIcon, Trophy } from 'lucide-react';
 import { useFavoritesStore } from '@/store/useFavoritesStore';
 import { useCharacterCollectionStore } from '@/store/useCharacterCollectionStore';
+import { useTreasureHuntStore } from '@/store/useTreasureHuntStore';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -10,7 +11,12 @@ export const Navbar = () => {
   const location = useLocation();
   const { favorites } = useFavoritesStore();
   const { getCollectionCount } = useCharacterCollectionStore();
+  const { stats, init } = useTreasureHuntStore();
   const collectionCount = getCollectionCount();
+
+  useEffect(() => {
+    init();
+  }, [init]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +35,8 @@ export const Navbar = () => {
     { path: '/time-corridor', label: '时间长廊', icon: Clock },
     { path: '/characters', label: '角色博物馆', icon: Users },
     { path: '/workshop', label: '制作工坊', icon: Hammer },
+    { path: '/treasure-hunt', label: '寻宝模式', icon: SearchIcon },
+    { path: '/achievements', label: '成就中心', icon: Trophy },
     { path: '/era/80s', label: '80年代', color: 'text-80s-primary' },
     { path: '/era/90s', label: '90年代', color: 'text-90s-primary' },
     { path: '/era/00s', label: '2000年代', color: 'text-00s-primary' },
@@ -90,6 +98,14 @@ export const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-2">
+          <Link
+            to="/treasure-hunt"
+            className="glass-button px-3 py-2 text-museum-textMuted hover:text-yellow-400 hidden sm:flex items-center gap-2"
+            aria-label="积分"
+          >
+            <Trophy className="w-4 h-4 text-yellow-400" />
+            <span className="text-sm font-bold text-yellow-400">{stats.totalPoints}</span>
+          </Link>
           <Link
             to="/search"
             className="glass-button p-2.5 text-museum-textMuted hover:text-white"

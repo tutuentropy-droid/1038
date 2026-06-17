@@ -133,7 +133,7 @@ export const AnimeCard = ({
         </div>
 
         {showFavorite && (
-          <div className="absolute top-3 right-3">
+          <div className="absolute top-3 right-3 z-20">
             <FavoritesButton animeId={anime.id} size="sm" />
           </div>
         )}
@@ -166,7 +166,7 @@ export const AnimeCard = ({
           </div>
         </div>
 
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div 
             className="w-16 h-16 rounded-full flex items-center justify-center"
             style={{ 

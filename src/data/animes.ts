@@ -1,4 +1,4 @@
-import { Anime, EraType } from '@/types';
+import { Anime, EraType, AnimationType, CharacterRelation } from '@/types';
 
 const imgPrompt = (prompt: string, size = 'portrait_4_3') => 
   `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt)}&image_size=${size}`;
@@ -10,6 +10,8 @@ export const animes: Anime[] = [
     originalTitle: 'ドラえもん',
     year: 1979,
     era: '80s',
+    country: '日本',
+    animationType: ['TV' as AnimationType],
     genres: ['科幻', '喜剧', '冒险'],
     poster: imgPrompt('Doraemon anime poster, blue robot cat, Nobita, magical gadgets, retro 1980s anime style, colorful, nostalgic'),
     description: '来自22世纪的猫型机器人哆啦A梦，受主人野比世修的托付，回到20世纪，借助从四维口袋里拿出来的各种未来道具，来帮助世修的高祖父——小学生野比大雄化解身边的种种困难问题，以及生活中和妈妈野比玉子、身边的小伙伴静香、胖虎、小夫发生的轻松幽默搞笑感人的故事。',
@@ -40,6 +42,11 @@ export const animes: Anime[] = [
         voiceActor: '野村道子 / 嘉数由美'
       }
     ],
+    characterRelations: [
+      { from: 'doraemon-1', to: 'doraemon-2', relation: '守护者与被守护者', color: '#4FC3F7' },
+      { from: 'doraemon-2', to: 'doraemon-3', relation: '青梅竹马', color: '#F48FB1' },
+      { from: 'doraemon-1', to: 'doraemon-3', relation: '朋友', color: '#81C784' }
+    ] as CharacterRelation[],
     classicClips: [
       {
         id: 'doraemon-clip-1',
@@ -55,7 +62,8 @@ export const animes: Anime[] = [
         description: '大雄用时光机去看自己结婚的前夜，看到了静香和家人的感人对话。',
         quote: '大雄，我相信你一定可以的！'
       }
-    ]
+    ],
+    productionBackground: '《哆啦A梦》由日本漫画家藤子·F·不二雄创作，最初于1969年在《小学馆》杂志上连载。藤子·F·不二雄在创作时灵感来自于自己童年时缺少帮助的遗憾，希望有一个来自未来的伙伴来拯救笨拙的孩子。1979年动画版播出后迅速风靡全日本，成为日本国民级动画，至今仍在持续播出。'
   },
   {
     id: 'transformers',
@@ -63,6 +71,8 @@ export const animes: Anime[] = [
     originalTitle: 'Transformers',
     year: 1984,
     era: '80s',
+    country: '美国',
+    animationType: ['TV' as AnimationType],
     genres: ['科幻', '动作', '机甲'],
     poster: imgPrompt('Transformers G1 anime poster, Optimus Prime, Megatron, Autobots vs Decepticons, epic battle, retro 80s cartoon style, dynamic action'),
     description: '在遥远的宇宙中有一个星球——赛博特恩。星球上有一种金属生命体，他们在近百万年间分化成正义的汽车人和邪恶的霸天虎。两军进行了几百万年的战争，星球能源耗尽霸天虎追随汽车人来到了地球。',
@@ -86,6 +96,10 @@ export const animes: Anime[] = [
         voiceActor: 'Frank Welker'
       }
     ],
+    characterRelations: [
+      { from: 'tf-1', to: 'tf-2', relation: '宿敌', color: '#E53935' },
+      { from: 'tf-2', to: 'tf-1', relation: '死敌', color: '#7B1FA2' }
+    ] as CharacterRelation[],
     classicClips: [
       {
         id: 'tf-clip-1',
@@ -101,7 +115,8 @@ export const animes: Anime[] = [
         description: '擎天柱在与威震天的决战中重伤身亡，将领导模块传给了热破。',
         quote: '有时就连我们中最强大的战士，也需要帮助。'
       }
-    ]
+    ],
+    productionBackground: '《变形金刚》最初是美国玩具巨头孩之宝（Hasbro）为了推广其变形玩具系列而制作的动画。孩之宝从日本TAKARA公司引进了可变形机器人的玩具授权，并邀请漫威漫画编写背景故事。1984年动画播出后不仅玩具大卖，更在全球范围内掀起变形金刚热潮，成为美国动画史上的商业奇迹。'
   },
   {
     id: 'saint-seiya',
@@ -109,6 +124,8 @@ export const animes: Anime[] = [
     originalTitle: '聖闘士星矢',
     year: 1986,
     era: '80s',
+    country: '日本',
+    animationType: ['TV' as AnimationType],
     genres: ['热血', '战斗', '神话'],
     poster: imgPrompt('Saint Seiya anime poster, Pegasus Seiya, Gold Saints, Athena Saori, epic fantasy battle, 1980s retro anime style, cosmic energy'),
     description: '在遥远的神话时代，海神波塞冬、冥王哈迪斯等神多次想要夺取大地，但是，每次都有一群充满勇气与力量的少年们出现，他们被称为女神雅典娜的圣斗士。青铜圣斗士天马座星矢等人为了守护雅典娜，经历了无数战斗。',
@@ -139,6 +156,11 @@ export const animes: Anime[] = [
         voiceActor: '小西克幸'
       }
     ],
+    characterRelations: [
+      { from: 'ss-3', to: 'ss-2', relation: '兄弟', color: '#FF7043' },
+      { from: 'ss-1', to: 'ss-2', relation: '战友', color: '#42A5F5' },
+      { from: 'ss-1', to: 'ss-3', relation: '亦敌亦友', color: '#AB47BC' }
+    ] as CharacterRelation[],
     classicClips: [
       {
         id: 'ss-clip-1',
@@ -154,7 +176,8 @@ export const animes: Anime[] = [
         description: '在沙罗双树园，沙加领悟第八感，从容面对死亡。',
         quote: '花开了，然后会凋零，星星是璀璨的，可那光芒也会消失。'
       }
-    ]
+    ],
+    productionBackground: '《圣斗士星矢》改编自车田正美的同名漫画，1986年由东映动画制作播出。车田正美深受希腊神话影响，将星座与铠甲结合创造了独特的圣衣设定。动画播出后在全亚洲引发狂热，尤其在中国和法国拥有极高人气，"燃烧吧小宇宙"成为一代人的口头禅。'
   },
   {
     id: 'dragon-ball',
@@ -162,6 +185,8 @@ export const animes: Anime[] = [
     originalTitle: 'ドラゴンボール',
     year: 1986,
     era: '80s',
+    country: '日本',
+    animationType: ['TV' as AnimationType],
     genres: ['热血', '冒险', '战斗'],
     poster: imgPrompt('Dragon Ball anime poster, Son Goku, Kamehameha energy blast, Dragon Balls, Master Roshi, Bulma, retro 80s anime style, vibrant colors'),
     description: '独自住在深山的少年孙悟空，遇上搜集七龙珠的少女科学家布尔玛，布尔玛为得到悟空拥有的四星七龙珠而带同悟空踏上找寻七龙珠的旅程。长有尾巴的孙悟空天生神力，加上曾得到武师龟仙人的指导修行，在找寻七龙珠的过程中遇到了很多好朋友，也遇到了很多敌人。',
@@ -185,6 +210,10 @@ export const animes: Anime[] = [
         voiceActor: '鹤弘美'
       }
     ],
+    characterRelations: [
+      { from: 'db-1', to: 'db-2', relation: '冒险伙伴', color: '#66BB6A' },
+      { from: 'db-2', to: 'db-1', relation: '挚友', color: '#29B6F6' }
+    ] as CharacterRelation[],
     classicClips: [
       {
         id: 'db-clip-1',
@@ -200,7 +229,8 @@ export const animes: Anime[] = [
         description: '悟空与天津饭在武道会决赛展开激战，最后悟空惜败但赢得了尊重。',
         quote: '我还没输呢！'
       }
-    ]
+    ],
+    productionBackground: '《龙珠》改编自鸟山明的同名漫画，其创作灵感最初来源于中国古典名著《西游记》，早期的角色设定和冒险模式都有明显的西游痕迹。鸟山明原本计划在悟空打败比克大魔王后完结，但因读者热情高涨而继续连载，最终创造了赛亚人篇等更加宏大的世界观，成为日本漫画史上的不朽经典。'
   },
   {
     id: 'sailor-moon',
@@ -208,6 +238,8 @@ export const animes: Anime[] = [
     originalTitle: '美少女戦士セーラームーン',
     year: 1992,
     era: '90s',
+    country: '日本',
+    animationType: ['TV' as AnimationType],
     genres: ['魔法少女', '恋爱', '战斗'],
     poster: imgPrompt('Sailor Moon anime poster, Usagi Tsukino, Sailor Scouts, Tuxedo Mask, magical girl transformation, 90s anime style, pink and blue theme'),
     description: '月野兔是一个平凡的初中生，某天她遇到了一只会说话的黑猫露娜，从此她的命运发生了巨大改变。她变身成为爱与正义的水手服美少女战士水手月亮，与伙伴们一起对抗黑暗势力，保卫地球。',
@@ -231,6 +263,10 @@ export const animes: Anime[] = [
         voiceActor: '古谷彻'
       }
     ],
+    characterRelations: [
+      { from: 'sm-1', to: 'sm-2', relation: '恋人', color: '#EC407A' },
+      { from: 'sm-2', to: 'sm-1', relation: '守护者', color: '#5C6BC0' }
+    ] as CharacterRelation[],
     classicClips: [
       {
         id: 'sm-clip-1',
@@ -246,7 +282,8 @@ export const animes: Anime[] = [
         description: '水手月亮与伙伴们在银千年王国与贝利尔女王展开最终决战。',
         quote: '即使失去记忆，我也会再次爱上你。'
       }
-    ]
+    ],
+    productionBackground: '《美少女战士》改编自武内直子的同名漫画，是魔法少女类型的革命性作品。武内直子打破了传统魔法少女仅靠可爱取胜的模式，将战斗元素与少女漫画完美结合。该作在全球超过40个国家播出，成为日本文化输出的标志性作品，"我要替月行道"的台词成为流行文化经典。'
   },
   {
     id: 'slam-dunk',
@@ -254,6 +291,8 @@ export const animes: Anime[] = [
     originalTitle: 'スラムダンク',
     year: 1993,
     era: '90s',
+    country: '日本',
+    animationType: ['TV' as AnimationType],
     genres: ['体育', '热血', '校园'],
     poster: imgPrompt('Slam Dunk anime poster, Hanamichi Sakuragi, Shohoku basketball team, red jersey, basketball court, dynamic sports action, 90s anime style'),
     description: '为了讨好同级暗恋对象赤木晴子的欢心，原来毫无篮球基础的樱木花道不加思索就参加了篮球队，而晴子却喜欢从初中开始就一直是明星球员的流川枫。天生的潜质加上不服输的精神，使樱木飞速进步，渐渐成为湘北篮球队不可缺的主力球员。',
@@ -284,6 +323,11 @@ export const animes: Anime[] = [
         voiceActor: '梁田清之'
       }
     ],
+    characterRelations: [
+      { from: 'sd-1', to: 'sd-2', relation: '竞争对手', color: '#EF5350' },
+      { from: 'sd-1', to: 'sd-3', relation: '队员', color: '#26A69A' },
+      { from: 'sd-2', to: 'sd-3', relation: '队友', color: '#42A5F5' }
+    ] as CharacterRelation[],
     classicClips: [
       {
         id: 'sd-clip-1',
@@ -299,7 +343,8 @@ export const animes: Anime[] = [
         description: '樱木在比赛最后关头完成了决定胜负的灌篮，帮助湘北战胜陵南。',
         quote: '老爹，你最辉煌的时刻是什么时候？是全日本时代吗？而我，就是现在了！'
       }
-    ]
+    ],
+    productionBackground: '《灌篮高手》改编自井上雄彦的同名漫画，是一部影响了一代人篮球热情的传奇作品。动画播出期间，日本篮球参与人数激增，被称作"灌篮高手效应"。井上雄彦在创作时对篮球动作的精准刻画源于他对NBA的深入研究，樱木花道与流川枫的 rivalry 更成为动漫史上最经典的对决之一。'
   },
   {
     id: 'detective-conan',
@@ -307,6 +352,8 @@ export const animes: Anime[] = [
     originalTitle: '名探偵コナン',
     year: 1996,
     era: '90s',
+    country: '日本',
+    animationType: ['TV' as AnimationType, '剧场版' as AnimationType],
     genres: ['推理', '悬疑', '犯罪'],
     poster: imgPrompt('Detective Conan anime poster, Shinichi Kudo, Conan Edogawa, Ran Mouri, mystery crime scene, magnifying glass, 90s anime style'),
     description: '高中生侦探工藤新一，被称为"日本警察的救世主"、"平成年代的福尔摩斯"。一次在与青梅竹马毛利兰去游乐园游玩时，发现两个行动诡异的黑衣人。新一跟踪他们直到交易现场，另一个黑衣人趁其不注意从后面将他一棒击倒，并灌下一种名为APTX4869的神秘毒药企图杀他灭口，但因为副作用他的身体竟回到发育期的孩童状态。',
@@ -337,6 +384,11 @@ export const animes: Anime[] = [
         voiceActor: '林原惠美'
       }
     ],
+    characterRelations: [
+      { from: 'dc-1', to: 'dc-2', relation: '青梅竹马', color: '#F06292' },
+      { from: 'dc-1', to: 'dc-3', relation: '秘密共享者', color: '#7E57C2' },
+      { from: 'dc-3', to: 'dc-1', relation: '同伴', color: '#26C6DA' }
+    ] as CharacterRelation[],
     classicClips: [
       {
         id: 'dc-clip-1',
@@ -352,7 +404,8 @@ export const animes: Anime[] = [
         description: '在游乐园，柯南向失去记忆的小兰表明心意。',
         quote: '因为我喜欢你，比这个世界上的任何一个人都要喜欢你！'
       }
-    ]
+    ],
+    productionBackground: '《名侦探柯南》改编自青山刚昌的同名推理漫画，自1996年播出至今已超过一千集。青山刚昌从小酷爱福尔摩斯，将推理与恋爱巧妙融合。剧场版每年黄金周上映已成为日本惯例，系列票房累计超过千亿日元。作品中的黑衣组织谜团至今仍是粉丝热议的话题。'
   },
   {
     id: 'one-piece',
@@ -360,6 +413,8 @@ export const animes: Anime[] = [
     originalTitle: 'ONE PIECE',
     year: 1999,
     era: '90s',
+    country: '日本',
+    animationType: ['TV' as AnimationType],
     genres: ['热血', '冒险', '战斗'],
     poster: imgPrompt('One Piece anime poster, Monkey D Luffy, Straw Hat Pirates, Thousand Sunny ship, Grand Line ocean, epic adventure, 90s anime style'),
     description: '拥有财富、名声、权力，这世界上的一切的男人"海贼王"哥尔·D·罗杰，在被行刑受死之前说了一句话，让全世界的人都涌向了大海。"想要我的宝藏吗？如果想要的话，那就到海上去找吧，我全部都放在那里。"于是，所有男子汉们都前往"伟大航路"追寻梦想，世界开始迎接"大海贼时代"的来临。',
@@ -390,6 +445,11 @@ export const animes: Anime[] = [
         voiceActor: '冈村明美'
       }
     ],
+    characterRelations: [
+      { from: 'op-1', to: 'op-2', relation: '船长与船员', color: '#FFA726' },
+      { from: 'op-1', to: 'op-3', relation: '船长与船员', color: '#66BB6A' },
+      { from: 'op-2', to: 'op-3', relation: '伙伴', color: '#42A5F5' }
+    ] as CharacterRelation[],
     classicClips: [
       {
         id: 'op-clip-1',
@@ -405,7 +465,8 @@ export const animes: Anime[] = [
         description: '为了保护路飞，索隆承受了熊的攻击，满身是血但依然站立。',
         quote: '什么都没有发生。'
       }
-    ]
+    ],
+    productionBackground: '《海贼王》改编自尾田荣一郎的同名漫画，是全球销量最高的漫画作品，累计发行量突破5亿册。尾田荣一郎从小学起就梦想成为漫画家，在担任和月伸宏的助手期间构思了海贼王的世界观。作品中的每个岛屿和角色都融入了尾田对世界各地文化的独特理解，构建了一个宏大而细腻的冒险世界。'
   },
   {
     id: 'naruto',
@@ -413,6 +474,8 @@ export const animes: Anime[] = [
     originalTitle: 'NARUTO -ナルト-',
     year: 2002,
     era: '00s',
+    country: '日本',
+    animationType: ['TV' as AnimationType],
     genres: ['热血', '战斗', '忍者'],
     poster: imgPrompt('Naruto anime poster, Naruto Uzumaki, orange outfit, Nine Tails fox chakra, Sasuke Uchiha, Konoha village, ninja action, 2000s anime style'),
     description: '十多年前一只拥有巨大威力的妖兽"九尾妖狐"袭击了木叶忍者村，当时的第四代火影拼尽全力，以自己的生命为代价将"九尾妖狐"封印在了刚出生的鸣人身上。木叶村终于恢复了平静，但村民们却把鸣人当成怪物看待，所有人都疏远他。鸣人自小孤苦无依，为了让更多人认可自己，他的目标是成为火影！',
@@ -443,6 +506,11 @@ export const animes: Anime[] = [
         voiceActor: '中村千绘'
       }
     ],
+    characterRelations: [
+      { from: 'n-1', to: 'n-2', relation: '挚友与宿敌', color: '#FF7043' },
+      { from: 'n-1', to: 'n-3', relation: '队友', color: '#EC407A' },
+      { from: 'n-3', to: 'n-2', relation: '暗恋', color: '#AB47BC' }
+    ] as CharacterRelation[],
     classicClips: [
       {
         id: 'n-clip-1',
@@ -458,7 +526,8 @@ export const animes: Anime[] = [
         description: '鸣人在与佩恩战斗中即将九尾化时，见到了自己的父亲第四代火影波风水门。',
         quote: '我从来都不觉得父母是什么样的人有多么重要，重要的是，我现在活着，而你是我父亲，这就够了。'
       }
-    ]
+    ],
+    productionBackground: '《火影忍者》改编自岸本齐史的同名漫画，是21世纪初最具影响力的少年漫画之一。岸本齐史在创作忍者世界时，不仅借鉴了日本传统忍者文化，还融入了现代少年成长的烦恼与羁绊。鸣人与佐助之间爱恨交织的友情线，被认为是少年漫画中最深刻的角色关系之一。'
   },
   {
     id: 'bleach',
@@ -466,6 +535,8 @@ export const animes: Anime[] = [
     originalTitle: 'BLEACH',
     year: 2004,
     era: '00s',
+    country: '日本',
+    animationType: ['TV' as AnimationType],
     genres: ['热血', '战斗', '死神'],
     poster: imgPrompt('Bleach anime poster, Ichigo Kurosaki, Soul Reaper, black katana, bankai orange energy, Rukia Kuchiki, Soul Society, 2000s anime style'),
     description: '男主角黑崎一护是个看似暴力、单薄，实质上善良、勇敢、爱护家庭的少年，并且拥有能看见灵的体质。家里有两个同样能看见灵的妹妹夏梨和游子，还有一个开诊所、异常严厉的老爸。一护15岁这年，遇见了朽木露琪亚，人生发生了天翻地覆的变化。',
@@ -489,6 +560,10 @@ export const animes: Anime[] = [
         voiceActor: '折笠富美子'
       }
     ],
+    characterRelations: [
+      { from: 'b-1', to: 'b-2', relation: '恩人与伙伴', color: '#5C6BC0' },
+      { from: 'b-2', to: 'b-1', relation: '引导者', color: '#26C6DA' }
+    ] as CharacterRelation[],
     classicClips: [
       {
         id: 'b-clip-1',
@@ -504,7 +579,8 @@ export const animes: Anime[] = [
         description: '一护领悟最后的月牙天冲，与蓝染展开最终决战。',
         quote: '我等，因无形而恐惧。'
       }
-    ]
+    ],
+    productionBackground: '《境·界》（BLEACH）改编自久保带人的同名漫画，与《火影忍者》《海贼王》并称"三大民工漫"。久保带人最初以死神与人类世界的交汇为概念，创作出了独特的灵界世界观。作品中每把斩魄刀的始解与卍解设计极具创意，卍解的设定更是成为热血漫画中角色觉醒的经典范式。'
   },
   {
     id: 'attack-on-titan',
@@ -512,6 +588,8 @@ export const animes: Anime[] = [
     originalTitle: '進撃の巨人',
     year: 2013,
     era: '00s',
+    country: '日本',
+    animationType: ['TV' as AnimationType],
     genres: ['黑暗', '战斗', '悬疑'],
     poster: imgPrompt('Attack on Titan anime poster, Eren Yeager, Mikasa Ackerman, Colossal Titan, wall Maria, epic dark fantasy, survey corps cloak, modern anime style'),
     description: '107年前，世界上突然出现了人类的天敌"巨人"。面临着生存危机而残存下来的人类逃到了一个地方，盖起了三重巨大的墙壁。人们在这隔绝的环境里享受了一百多年的和平，直到艾伦·耶格尔十岁那年，60米高的"超大型巨人"突然出现，以压倒性的力量破坏城门，其后瞬间消失，巨人们成群的冲进墙内捕食人类。',
@@ -542,6 +620,11 @@ export const animes: Anime[] = [
         voiceActor: '神谷浩史'
       }
     ],
+    characterRelations: [
+      { from: 'aot-2', to: 'aot-1', relation: '守护者', color: '#EF5350' },
+      { from: 'aot-3', to: 'aot-1', relation: '长官与部下', color: '#78909C' },
+      { from: 'aot-1', to: 'aot-2', relation: '青梅竹马', color: '#F48FB1' }
+    ] as CharacterRelation[],
     classicClips: [
       {
         id: 'aot-clip-1',
@@ -557,7 +640,8 @@ export const animes: Anime[] = [
         description: '团长埃尔文和阿尔敏都濒死，利威尔面临艰难抉择，最终选择救活阿尔敏。',
         quote: '放弃你的梦想去死吧，带着新兵们的命去地狱，我会让他们见识地狱的。'
       }
-    ]
+    ],
+    productionBackground: '《进击的巨人》改编自谏山创的同名漫画，是近年来最具话题性的黑暗幻想作品。谏山创在创作时受到北欧神话和末日题材的影响，构建了一个残酷而深刻的世界。动画由WIT Studio制作，以精良的立体机动装置战斗场景震惊观众，后期转由MAPPA制作，画面质量进一步提升。'
   },
   {
     id: 'demon-slayer',
@@ -565,6 +649,8 @@ export const animes: Anime[] = [
     originalTitle: '鬼滅の刃',
     year: 2019,
     era: '00s',
+    country: '日本',
+    animationType: ['TV' as AnimationType, '剧场版' as AnimationType],
     genres: ['热血', '战斗', '时代剧'],
     poster: imgPrompt('Demon Slayer anime poster, Tanjiro Kamado, Nezuko, Water Breathing Nichirin Sword, demons, Taisho era Japan, beautiful Ufotable animation style'),
     description: '大正时期，日本。卖炭少年炭治郎，某天家人惨遭鬼杀害。而唯一幸存的妹妹祢豆子，也被变成了鬼。在猎鬼人的指引下，立志成为猎鬼人的炭治郎与变成鬼却尚存理智的祢豆子踏上了旅程。通过艰苦的修行和赌上性命的试炼，炭治郎成为了鬼杀队的一员。',
@@ -595,6 +681,11 @@ export const animes: Anime[] = [
         voiceActor: '下野纮'
       }
     ],
+    characterRelations: [
+      { from: 'ds-1', to: 'ds-2', relation: '兄妹', color: '#FF8A65' },
+      { from: 'ds-1', to: 'ds-3', relation: '同期伙伴', color: '#FFD54F' },
+      { from: 'ds-3', to: 'ds-1', relation: '同伴', color: '#4DD0E1' }
+    ] as CharacterRelation[],
     classicClips: [
       {
         id: 'ds-clip-1',
@@ -610,7 +701,8 @@ export const animes: Anime[] = [
         description: '炭治郎在与下弦五累的战斗中，使出了火神神乐，配合祢豆子的血鬼术。',
         quote: '集中一点，登峰造极！'
       }
-    ]
+    ],
+    productionBackground: '《鬼灭之刃》改编自吾峠呼世晴的同名漫画，以大正时代的日本为舞台，讲述了一段关于家族与命运的感人故事。ufotable工作室运用业界顶尖的数字动画技术，将呼吸招式以绚丽的视觉特效呈现，尤其是第19集的火神神乐场景震撼了全球观众。剧场版《无限列车篇》更创下日本影史票房最高纪录。'
   },
   {
     id: 'nezha',
@@ -618,6 +710,8 @@ export const animes: Anime[] = [
     originalTitle: '哪吒传奇',
     year: 2003,
     era: '00s',
+    country: '中国',
+    animationType: ['TV' as AnimationType],
     genres: ['神话', '冒险', '国产'],
     poster: imgPrompt('Nezha Chinese animation poster, Nezha with fire wheels, red ribbon, golden spear, Chinese mythology, traditional art style, dragons, epic battle'),
     description: '哪吒还没出生就被申公豹与石矶暗算，经历千辛万苦终于顺利出生。哪吒从小就展现出非凡的能力，但是因为误伤敖丙而与东海结下怨仇。为了不连累陈塘关百姓，哪吒削骨还父、削肉还母。后来在太乙真人的帮助下，哪吒借莲花复活，并最终战胜了石矶。',
@@ -641,6 +735,10 @@ export const animes: Anime[] = [
         voiceActor: '陈红'
       }
     ],
+    characterRelations: [
+      { from: 'nezha-1', to: 'nezha-2', relation: '好友', color: '#4FC3F7' },
+      { from: 'nezha-2', to: 'nezha-1', relation: '伙伴', color: '#81C784' }
+    ] as CharacterRelation[],
     classicClips: [
       {
         id: 'nezha-clip-1',
@@ -656,7 +754,8 @@ export const animes: Anime[] = [
         description: '为了保护陈塘关百姓，哪吒挺身而出，削骨还父、削肉还母。',
         quote: '爹爹，你的骨肉我还给你！'
       }
-    ]
+    ],
+    productionBackground: '《哪吒传奇》取材于中国古典神话《封神演义》，由中央电视台动画部制作。该剧将传统神话故事进行现代化改编，在保留哪吒削骨还父等经典桥段的同时，增加了石矶作为贯穿全剧的反派角色。2003年在央视播出后广受好评，主题曲"是他就是他"传唱至今，成为中国儿童动画的经典之作。'
   },
   {
     id: 'pleasant-goat',
@@ -664,6 +763,8 @@ export const animes: Anime[] = [
     originalTitle: '喜羊羊与灰太狼',
     year: 2005,
     era: '00s',
+    country: '中国',
+    animationType: ['TV' as AnimationType],
     genres: ['喜剧', '儿童', '国产'],
     poster: imgPrompt('Pleasant Goat and Big Big Wolf cartoon poster, Xi Yangyang, Lan Yangyang, Fei Yangyang, Grey Wolf, Red Wolf, green meadow, cute cartoon style'),
     description: '在绿草甜美、宁静安详的青青草原上，生活着一群无忧无虑的小白羊。聪明伶俐的喜羊羊，可爱漂亮的美羊羊，大智若愚的懒羊羊，外粗内细的沸羊羊，还有行动缓慢的慢羊羊村长。而在草原另一边的森林里，住着灰太狼和红太狼夫妇。灰太狼天天都在计划着如何吃到羊，但每次都失败而归。',
@@ -687,6 +788,10 @@ export const animes: Anime[] = [
         voiceActor: '张琳'
       }
     ],
+    characterRelations: [
+      { from: 'pg-1', to: 'pg-2', relation: '天敌', color: '#E53935' },
+      { from: 'pg-2', to: 'pg-1', relation: '猎物', color: '#FF9800' }
+    ] as CharacterRelation[],
     classicClips: [
       {
         id: 'pg-clip-1',
@@ -702,7 +807,8 @@ export const animes: Anime[] = [
         description: '灰太狼抓羊失败回到家，红太狼用平底锅把他打飞。',
         quote: '笨蛋！抓不到羊就别回来！'
       }
-    ]
+    ],
+    productionBackground: '《喜羊羊与灰太狼》由广东原创动力文化传播有限公司制作，是中国原创动画的代表作之一。导演黄伟明将狼与羊的古老寓言以轻松幽默的方式重新演绎，创造了灰太狼"我一定会回来的"等经典台词。该动画连续播出超过千集，并每年推出生肖大电影，成为陪伴中国儿童成长的文化符号。'
   }
 ];
 

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Star, Play } from 'lucide-react';
+import { Star, Play, MapPin, Calendar } from 'lucide-react';
 import { Anime, ERA_INFO } from '@/types';
 import { FavoritesButton } from './FavoritesButton';
 
@@ -35,9 +35,10 @@ export const AnimeCard = ({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
           <div 
-            className="absolute top-1 left-1 px-1.5 py-0.5 rounded text-[10px] font-bold text-white"
+            className="absolute top-1 left-1 px-1.5 py-0.5 rounded text-[10px] font-bold text-white flex items-center gap-0.5"
             style={{ backgroundColor: eraInfo.color }}
           >
+            <Calendar className="w-2.5 h-2.5" />
             {anime.year}
           </div>
         </div>
@@ -55,7 +56,19 @@ export const AnimeCard = ({
             </div>
             <span className="text-xs text-museum-textMuted">{anime.episodes}集</span>
           </div>
+          <div className="flex items-center gap-1 mt-2 text-xs text-museum-textMuted">
+            <MapPin className="w-3 h-3" />
+            <span>{anime.country}</span>
+          </div>
           <div className="flex flex-wrap gap-1 mt-2">
+            {anime.animationType.slice(0, 2).map((t) => (
+              <span 
+                key={t}
+                className="px-1.5 py-0.5 rounded text-[10px] bg-white/5 text-white/70"
+              >
+                {t}
+              </span>
+            ))}
             {anime.genres.slice(0, 2).map((genre) => (
               <span 
                 key={genre}
@@ -122,14 +135,21 @@ export const AnimeCard = ({
         
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
         
-        <div 
-          className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-bold text-white flex items-center gap-1"
-          style={{ 
-            backgroundColor: eraInfo.color,
-            boxShadow: `0 0 15px ${eraInfo.glowColor}`
-          }}
-        >
-          {eraInfo.name}
+        <div className="absolute top-3 left-3 flex flex-wrap items-center gap-1.5">
+          <div 
+            className="px-2 py-1 rounded-full text-[10px] font-bold text-white flex items-center gap-1"
+            style={{ 
+              backgroundColor: eraInfo.color,
+              boxShadow: `0 0 15px ${eraInfo.glowColor}`
+            }}
+          >
+            <Calendar className="w-3 h-3" />
+            {anime.year}
+          </div>
+          <div className="px-2 py-1 rounded-full text-[10px] font-medium bg-black/50 backdrop-blur-sm text-white/80 flex items-center gap-1">
+            <MapPin className="w-3 h-3" />
+            {anime.country}
+          </div>
         </div>
 
         {showFavorite && (
@@ -137,6 +157,17 @@ export const AnimeCard = ({
             <FavoritesButton animeId={anime.id} size="sm" />
           </div>
         )}
+
+        <div className="absolute top-14 left-3 right-3 flex flex-wrap gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          {anime.animationType.map((t) => (
+            <span
+              key={t}
+              className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-black/60 backdrop-blur-sm text-white"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
 
         <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
           <div className="flex items-center gap-2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">

@@ -10,11 +10,15 @@ import {
   Play,
   Quote,
   Tv,
-  Heart
+  Heart,
+  Globe,
+  Tag,
+  BookOpen
 } from 'lucide-react';
 import { getAnimeById, animes } from '@/data/animes';
 import { ERA_INFO } from '@/types';
 import { CharacterCard } from '@/components/CharacterCard';
+import { CharacterRelationGraph } from '@/components/CharacterRelationGraph';
 import { AnimeCard } from '@/components/AnimeCard';
 import { FavoritesButton } from '@/components/FavoritesButton';
 import { useFavoritesStore } from '@/store/useFavoritesStore';
@@ -51,7 +55,7 @@ export const AnimeDetail = () => {
   }, [anime.era, anime.id]);
 
   return (
-    <div className={`min-h-screen era-${anime.era}`}>
+    <div className={`min-h-screen era-${anime.era} page-transition-enter`}>
       <div className="relative h-[60vh] min-h-[500px] overflow-hidden">
         <div 
           className="absolute inset-0"
@@ -164,7 +168,7 @@ export const AnimeDetail = () => {
                 </h1>
                 <p className="text-white/60 text-lg mb-4">{anime.originalTitle}</p>
 
-                <div className="flex flex-wrap gap-4 mb-6">
+                <div className="flex flex-wrap gap-4 mb-4">
                   <div className="flex items-center gap-2 text-white/80">
                     <Calendar className="w-4 h-4" style={{ color: eraInfo.color }} />
                     <span className="text-sm">{anime.year}年</span>
@@ -172,6 +176,10 @@ export const AnimeDetail = () => {
                   <div className="flex items-center gap-2 text-white/80">
                     <Film className="w-4 h-4" style={{ color: eraInfo.color }} />
                     <span className="text-sm">全{anime.episodes}集</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-white/80">
+                    <Globe className="w-4 h-4" style={{ color: eraInfo.color }} />
+                    <span className="text-sm">{anime.country}</span>
                   </div>
                   <div className="flex items-center gap-2 text-white/80">
                     <User className="w-4 h-4" style={{ color: eraInfo.color }} />
@@ -183,7 +191,15 @@ export const AnimeDetail = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {anime.animationType.map((t) => (
+                    <span 
+                      key={t}
+                      className="px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-white/80 border border-white/10"
+                    >
+                      {t}
+                    </span>
+                  ))}
                   {anime.genres.map((genre) => (
                     <span 
                       key={genre}
@@ -228,6 +244,56 @@ export const AnimeDetail = () => {
                   className="w-1 h-8 rounded-full"
                   style={{ backgroundColor: eraInfo.color }}
                 />
+                <BookOpen className="w-5 h-5" style={{ color: eraInfo.color }} />
+                制作背景
+              </h2>
+              <div className="glass-card p-6 md:p-8 relative overflow-hidden">
+                <div 
+                  className="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-20"
+                  style={{ backgroundColor: eraInfo.color }}
+                />
+                <p className="text-museum-textMuted leading-relaxed text-lg relative z-10">
+                  {anime.productionBackground}
+                </p>
+              </div>
+            </section>
+
+            {anime.characterRelations.length > 0 && (
+              <section className="opacity-0 animate-slide-up stagger-2" style={{ animationFillMode: 'forwards' }}>
+                <h2 className="font-display text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                  <span 
+                    className="w-1 h-8 rounded-full"
+                    style={{ backgroundColor: eraInfo.color }}
+                  />
+                  角色关系图
+                </h2>
+                <div className="glass-card p-4 md:p-6">
+                  <CharacterRelationGraph 
+                    characters={anime.characters}
+                    relations={anime.characterRelations}
+                    eraColor={eraInfo.color}
+                  />
+                  <div className="mt-4 flex flex-wrap gap-3 justify-center">
+                    {anime.characterRelations.map((rel, index) => (
+                      <div key={index} className="flex items-center gap-2 text-xs text-museum-textMuted">
+                        <div 
+                          className="w-3 h-0.5 rounded-full"
+                          style={{ backgroundColor: rel.color }}
+                        />
+                        <span>{rel.relation}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            )}
+
+            <section className="opacity-0 animate-slide-up stagger-2" style={{ animationFillMode: 'forwards' }}>
+              <h2 className="font-display text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <span 
+                  className="w-1 h-8 rounded-full"
+                  style={{ backgroundColor: eraInfo.color }}
+                />
                 主要角色
               </h2>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -241,7 +307,7 @@ export const AnimeDetail = () => {
               </div>
             </section>
 
-            <section className="opacity-0 animate-slide-up stagger-2" style={{ animationFillMode: 'forwards' }}>
+            <section className="opacity-0 animate-slide-up stagger-3" style={{ animationFillMode: 'forwards' }}>
               <h2 className="font-display text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <span 
                   className="w-1 h-8 rounded-full"
@@ -316,6 +382,10 @@ export const AnimeDetail = () => {
                     <span className="text-white">{anime.year}</span>
                   </div>
                   <div className="flex items-center justify-between">
+                    <span className="text-museum-textMuted text-sm">国家</span>
+                    <span className="text-white">{anime.country}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
                     <span className="text-museum-textMuted text-sm">集数</span>
                     <span className="text-white">{anime.episodes}</span>
                   </div>
@@ -335,10 +405,19 @@ export const AnimeDetail = () => {
               </div>
 
               <div className="glass-card p-6 opacity-0 animate-slide-right stagger-1" style={{ animationFillMode: 'forwards' }}>
-                <h3 className="font-display text-lg font-bold text-white mb-4">
+                <h3 className="font-display text-lg font-bold text-white mb-4 flex items-center gap-2">
+                  <Tag className="w-4 h-4" style={{ color: eraInfo.color }} />
                   类型标签
                 </h3>
                 <div className="flex flex-wrap gap-2">
+                  {anime.animationType.map((t) => (
+                    <span 
+                      key={t}
+                      className="px-3 py-1.5 rounded-full text-sm font-medium bg-white/5 text-white/70 border border-white/10"
+                    >
+                      {t}
+                    </span>
+                  ))}
                   {anime.genres.map((genre) => (
                     <span 
                       key={genre}

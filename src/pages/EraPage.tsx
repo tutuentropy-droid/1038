@@ -55,7 +55,7 @@ export const EraPage = () => {
   }, [animes]);
 
   return (
-    <div className={`min-h-screen era-${era.id}`}>
+    <div className={`min-h-screen era-${era.id} page-transition-enter`}>
       <div 
         className={`relative h-[50vh] min-h-[400px] ${getPatternClass()} overflow-hidden`}
         style={{ background: era.bgGradient }}

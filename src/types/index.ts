@@ -1,3 +1,10 @@
+export interface CharacterRelation {
+  from: string;
+  to: string;
+  relation: string;
+  color: string;
+}
+
 export interface Character {
   id: string;
   name: string;
@@ -14,12 +21,16 @@ export interface ClassicClip {
   quote: string;
 }
 
+export type AnimationType = 'TV' | '剧场版' | 'OVA' | 'Web';
+
 export interface Anime {
   id: string;
   title: string;
   originalTitle: string;
   year: number;
   era: '80s' | '90s' | '00s';
+  country: string;
+  animationType: AnimationType[];
   genres: string[];
   poster: string;
   description: string;
@@ -27,7 +38,9 @@ export interface Anime {
   studio: string;
   director: string;
   characters: Character[];
+  characterRelations: CharacterRelation[];
   classicClips: ClassicClip[];
+  productionBackground: string;
   rating: number;
 }
 

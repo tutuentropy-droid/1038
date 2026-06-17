@@ -5,6 +5,7 @@ import { EraPage } from "@/pages/EraPage";
 import { AnimeDetail } from "@/pages/AnimeDetail";
 import { SearchResult } from "@/pages/SearchResult";
 import { Favorites } from "@/pages/Favorites";
+import { TimeCorridor } from "@/pages/TimeCorridor";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <main>
           <Routes>
             <Route path="/" element={<Hall />} />
+            <Route path="/time-corridor" element={<TimeCorridor />} />
             <Route path="/era/:eraId" element={<EraPage />} />
             <Route path="/anime/:id" element={<AnimeDetail />} />
             <Route path="/search" element={<SearchResult />} />

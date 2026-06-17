@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react';
-import { Sparkles, ChevronDown, Film, Star, Tv } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Sparkles, ChevronDown, Film, Star, Tv, Clock, ArrowRight } from 'lucide-react';
 import { ERA_INFO } from '@/types';
 import { animes } from '@/data/animes';
 import { EraCard } from '@/components/EraCard';
@@ -31,7 +32,7 @@ export const Hall = () => {
   const eras = Object.values(ERA_INFO);
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden page-transition-enter">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {stars.map((star) => (
           <div
@@ -86,6 +87,42 @@ export const Hall = () => {
 
       <section className="relative py-20 px-4">
         <div className="container">
+          <div className="glass-card p-8 md:p-10 mb-12 relative overflow-hidden opacity-0 animate-slide-up stagger-1" style={{ animationFillMode: 'forwards' }}>
+            <div className="absolute inset-0 bg-gradient-to-r from-80s-primary/10 via-90s-primary/10 to-00s-primary/10" />
+            <div className="absolute top-0 right-0 w-80 h-80 bg-80s-primary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-00s-primary/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+            
+            <div className="absolute inset-0 opacity-30">
+              <div className="absolute top-1/2 left-12 right-12 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+              <div className="absolute top-1/2 left-1/4 w-2 h-2 rounded-full bg-80s-primary animate-pulse" style={{ transform: 'translateY(-50%)' }} />
+              <div className="absolute top-1/2 left-1/2 w-2 h-2 rounded-full bg-90s-primary animate-pulse" style={{ transform: 'translateY(-50%)', animationDelay: '0.5s' }} />
+              <div className="absolute top-1/2 left-3/4 w-2 h-2 rounded-full bg-00s-primary animate-pulse" style={{ transform: 'translateY(-50%)', animationDelay: '1s' }} />
+            </div>
+
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex items-center gap-5">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-80s-primary via-90s-primary to-00s-primary flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <Clock className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-2">
+                    时间长廊
+                  </h3>
+                  <p className="text-museum-textMuted max-w-md">
+                    沿着时间轴探索动画发展的历史脉络，穿越年代，感受经典的力量
+                  </p>
+                </div>
+              </div>
+              <Link
+                to="/time-corridor"
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-80s-primary via-90s-primary to-00s-primary text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                开始探索
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </div>
+
           <div className="flex items-center gap-4 mb-12">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-80s-primary to-90s-primary flex items-center justify-center">

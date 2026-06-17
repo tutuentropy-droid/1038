@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Film, Heart, Search, Menu, X } from 'lucide-react';
+import { Film, Heart, Search, Menu, X, Clock } from 'lucide-react';
 import { useFavoritesStore } from '@/store/useFavoritesStore';
 
 export const Navbar = () => {
@@ -23,6 +23,7 @@ export const Navbar = () => {
 
   const navLinks = [
     { path: '/', label: '大厅', icon: Film },
+    { path: '/time-corridor', label: '时间长廊', icon: Clock },
     { path: '/era/80s', label: '80年代', color: 'text-80s-primary' },
     { path: '/era/90s', label: '90年代', color: 'text-90s-primary' },
     { path: '/era/00s', label: '2000年代', color: 'text-00s-primary' },
@@ -55,6 +56,7 @@ export const Navbar = () => {
         <div className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => {
             const isActive = location.pathname === link.path;
+            const LinkIcon = link.icon;
             return (
               <Link
                 key={link.path}
@@ -63,9 +65,10 @@ export const Navbar = () => {
                   isActive ? 'bg-white/5' : 'hover:bg-white/5'
                 }`}
               >
-                <span className={`font-medium transition-colors duration-300 ${
+                <span className={`font-medium transition-colors duration-300 flex items-center gap-2 ${
                   isActive ? link.color || 'text-white' : 'text-museum-textMuted group-hover:text-white'
                 }`}>
+                  {LinkIcon && <LinkIcon className="w-4 h-4" />}
                   {link.label}
                 </span>
                 {isActive && (
@@ -117,6 +120,7 @@ export const Navbar = () => {
           <div className="container py-4 space-y-2">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
+              const LinkIcon = link.icon;
               return (
                 <Link
                   key={link.path}
@@ -125,6 +129,7 @@ export const Navbar = () => {
                     isActive ? 'bg-white/10' : 'hover:bg-white/5'
                   }`}
                 >
+                  {LinkIcon && <LinkIcon className={`w-5 h-5 ${isActive ? link.color || 'text-white' : 'text-museum-textMuted'}`} />}
                   <span className={`font-medium ${
                     isActive ? link.color || 'text-white' : 'text-museum-textMuted'
                   }`}>

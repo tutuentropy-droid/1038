@@ -60,7 +60,7 @@ export const SearchResult = () => {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
+    <div className="min-h-screen pt-24 pb-16 page-transition-enter">
       <div className="container">
         <Link 
           to="/"

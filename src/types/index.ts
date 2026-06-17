@@ -201,3 +201,48 @@ export interface ShareCardData {
   favoriteEra?: EraType;
   generatedAt: number;
 }
+
+export interface Position {
+  x: number;
+  y: number;
+}
+
+export interface MapExhibit {
+  id: string;
+  name: string;
+  position: Position;
+  size: { width: number; height: number };
+  era: EraType | 'entrance';
+  description: string;
+  linkPath: string;
+}
+
+export interface NPC {
+  id: string;
+  name: string;
+  role: string;
+  position: Position;
+  era: EraType;
+  avatar: string;
+  dialogues: string[];
+  eraStory: {
+    title: string;
+    content: string[];
+  };
+}
+
+export interface MapData {
+  width: number;
+  height: number;
+  exhibits: MapExhibit[];
+  npcs: NPC[];
+  obstacles: { x: number; y: number; width: number; height: number }[];
+}
+
+export type Direction = 'up' | 'down' | 'left' | 'right';
+
+export interface PlayerState {
+  position: Position;
+  direction: Direction;
+  isMoving: boolean;
+}

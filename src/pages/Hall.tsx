@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, ChevronDown, Film, Star, Tv, Clock, ArrowRight } from 'lucide-react';
+import { Sparkles, ChevronDown, Film, Star, Tv, Clock, ArrowRight, Map, Gamepad2 } from 'lucide-react';
 import { ERA_INFO } from '@/types';
 import { animes } from '@/data/animes';
 import { EraCard } from '@/components/EraCard';
@@ -119,6 +119,48 @@ export const Hall = () => {
               >
                 开始探索
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </div>
+
+          <div className="glass-card p-8 md:p-10 mb-12 relative overflow-hidden opacity-0 animate-slide-up stagger-2" style={{ animationFillMode: 'forwards' }}>
+            <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 via-orange-500/10 to-pink-500/10" />
+            <div className="absolute top-0 right-0 w-80 h-80 bg-yellow-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-pink-500/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+
+            <div className="absolute inset-0 opacity-20">
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: `
+                    linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+                  `,
+                  backgroundSize: '40px 40px',
+                }}
+              />
+            </div>
+
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex items-center gap-5">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <Gamepad2 className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-2">
+                    自由探索模式
+                  </h3>
+                  <p className="text-museum-textMuted max-w-md">
+                    控制小导游角色在博物馆中自由穿梭，与NPC讲解员互动，发现隐藏的惊喜！
+                  </p>
+                </div>
+              </div>
+              <Link
+                to="/explore"
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                开始冒险
+                <Gamepad2 className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
               </Link>
             </div>
           </div>

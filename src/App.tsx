@@ -14,6 +14,7 @@ import { CharacterCollection } from "@/pages/CharacterCollection";
 import { AnimationWorkshop } from "@/pages/AnimationWorkshop";
 import { TreasureHunt } from "@/pages/TreasureHunt";
 import { AchievementCenter } from "@/pages/AchievementCenter";
+import { ExploreMap } from "@/pages/ExploreMap";
 import { NewDiscoveryModal } from "@/components/NewDiscoveryModal";
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
         <main>
           <Routes>
             <Route path="/" element={<Hall />} />
+            <Route path="/explore" element={<ExploreMap />} />
             <Route path="/time-corridor" element={<TimeCorridor />} />
             <Route path="/era/:eraId" element={<EraPage />} />
             <Route path="/anime/:id" element={<AnimeDetail />} />

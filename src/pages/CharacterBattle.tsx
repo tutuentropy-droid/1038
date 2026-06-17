@@ -217,11 +217,12 @@ export const CharacterBattle = () => {
                         </div>
                       )}
 
-                      <div className="aspect-square rounded-2xl overflow-hidden mb-5 bg-black/30">
+                      <div className="w-full max-w-[320px] mx-auto aspect-square rounded-2xl overflow-hidden mb-5 bg-black/30">
                         <img
                           src={character.image}
                           alt={character.name}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          style={{ minHeight: '280px', minWidth: '280px' }}
                         />
                       </div>
 

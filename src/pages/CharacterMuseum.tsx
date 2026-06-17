@@ -114,6 +114,7 @@ export const CharacterMuseum = () => {
                 variant="page"
                 placeholder="搜索角色名称、动画或声优..."
                 onSearch={setSearchQuery}
+                showAnimeSuggestions={false}
               />
             </div>
           </div>

@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Film, Heart, Search, Menu, X, Clock } from 'lucide-react';
+import { Film, Heart, Search, Menu, X, Clock, Users } from 'lucide-react';
 import { useFavoritesStore } from '@/store/useFavoritesStore';
+import { useCharacterCollectionStore } from '@/store/useCharacterCollectionStore';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { favorites } = useFavoritesStore();
+  const { getCollectionCount } = useCharacterCollectionStore();
+  const collectionCount = getCollectionCount();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +27,7 @@ export const Navbar = () => {
   const navLinks = [
     { path: '/', label: '大厅', icon: Film },
     { path: '/time-corridor', label: '时间长廊', icon: Clock },
+    { path: '/characters', label: '角色博物馆', icon: Users },
     { path: '/era/80s', label: '80年代', color: 'text-80s-primary' },
     { path: '/era/90s', label: '90年代', color: 'text-90s-primary' },
     { path: '/era/00s', label: '2000年代', color: 'text-00s-primary' },
@@ -91,6 +95,18 @@ export const Navbar = () => {
             aria-label="搜索"
           >
             <Search className="w-5 h-5" />
+          </Link>
+          <Link
+            to="/characters/collection"
+            className="glass-button p-2.5 text-museum-textMuted hover:text-00s-primary relative group"
+            aria-label="角色收藏"
+          >
+            <Users className={`w-5 h-5 transition-colors ${collectionCount > 0 ? 'text-00s-primary' : ''}`} />
+            {collectionCount > 0 && (
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-00s-primary text-white text-xs rounded-full flex items-center justify-center font-bold animate-bounce-once">
+                {collectionCount}
+              </span>
+            )}
           </Link>
           <Link
             to="/favorites"

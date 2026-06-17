@@ -11,6 +11,29 @@ export interface Character {
   image: string;
   description: string;
   voiceActor: string;
+  animeId?: string;
+  animeTitle?: string;
+}
+
+export interface CharacterWithVotes extends Character {
+  votes: number;
+  rank?: number;
+}
+
+export interface VoteRecord {
+  characterId: string;
+  date: string;
+  timestamp: number;
+}
+
+export interface BattleRecord {
+  id: string;
+  character1Id: string;
+  character2Id: string;
+  winnerId: string | null;
+  timestamp: number;
+  character1Votes: number;
+  character2Votes: number;
 }
 
 export interface ClassicClip {

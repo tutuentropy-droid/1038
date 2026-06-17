@@ -7,23 +7,36 @@ import { AnimeCard } from './AnimeCard';
 interface SearchBarProps {
   variant?: 'page' | 'inline';
   autoFocus?: boolean;
+  placeholder?: string;
+  onSearch?: (query: string) => void;
+  showAnimeSuggestions?: boolean;
 }
 
-export const SearchBar = ({ variant = 'page', autoFocus = false }: SearchBarProps) => {
+export const SearchBar = ({
+  variant = 'page',
+  autoFocus = false,
+  placeholder = '搜索动画名称、角色、类型...',
+  onSearch,
+  showAnimeSuggestions = true,
+}: SearchBarProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [localQuery, setLocalQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  
-  const { 
-    query, 
-    setQuery, 
-    results, 
-    isSearching, 
-    searchHistory, 
+
+  const {
+    query: globalQuery,
+    setQuery: setGlobalQuery,
+    results,
+    isSearching,
+    searchHistory,
     addToHistory,
-    clearHistory 
+    clearHistory,
   } = useSearch();
+
+  const query = onSearch ? localQuery : globalQuery;
+  const setQuery = onSearch ? setLocalQuery : setGlobalQuery;
 
   useEffect(() => {
     if (autoFocus && inputRef.current) {
@@ -41,7 +54,11 @@ export const SearchBar = ({ variant = 'page', autoFocus = false }: SearchBarProp
     e.preventDefault();
     if (query.trim()) {
       addToHistory(query.trim());
-      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+      if (onSearch) {
+        onSearch(query.trim());
+      } else {
+        navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+      }
       setShowSuggestions(false);
     }
   };
@@ -49,7 +66,11 @@ export const SearchBar = ({ variant = 'page', autoFocus = false }: SearchBarProp
   const handleHistoryClick = (term: string) => {
     setQuery(term);
     addToHistory(term);
-    navigate(`/search?q=${encodeURIComponent(term)}`);
+    if (onSearch) {
+      onSearch(term);
+    } else {
+      navigate(`/search?q=${encodeURIComponent(term)}`);
+    }
     setShowSuggestions(false);
   };
 
@@ -102,7 +123,7 @@ export const SearchBar = ({ variant = 'page', autoFocus = false }: SearchBarProp
                 setIsFocused(false);
                 setTimeout(() => setShowSuggestions(false), 200);
               }}
-              placeholder="搜索动画名称、角色、类型..."
+              placeholder={placeholder}
               className="flex-1 px-4 py-4 bg-transparent text-white placeholder:text-museum-textMuted 
                 focus:outline-none text-base"
             />
@@ -130,13 +151,13 @@ export const SearchBar = ({ variant = 'page', autoFocus = false }: SearchBarProp
       {showSuggestions && (
         <div className="absolute top-full left-0 right-0 mt-3 z-50 
           glass-card max-h-96 overflow-y-auto animate-scale-in origin-top">
-          {isSearching ? (
+          {showAnimeSuggestions && isSearching ? (
             <div className="p-8 text-center">
               <div className="w-8 h-8 border-2 border-80s-primary/30 border-t-80s-primary 
                 rounded-full animate-spin mx-auto mb-3" />
               <p className="text-museum-textMuted text-sm">搜索中...</p>
             </div>
-          ) : results.length > 0 ? (
+          ) : showAnimeSuggestions && results.length > 0 ? (
             <div className="p-2">
               <p className="px-4 py-2 text-xs text-museum-textMuted font-medium">
                 找到 {results.length} 个结果
@@ -161,7 +182,7 @@ export const SearchBar = ({ variant = 'page', autoFocus = false }: SearchBarProp
                 </button>
               )}
             </div>
-          ) : query.trim() ? (
+          ) : showAnimeSuggestions && query.trim() ? (
             <div className="p-8 text-center">
               <p className="text-museum-textMuted">没有找到相关动画</p>
               <p className="text-xs text-museum-textMuted/60 mt-1">

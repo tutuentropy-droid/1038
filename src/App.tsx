@@ -6,6 +6,11 @@ import { AnimeDetail } from "@/pages/AnimeDetail";
 import { SearchResult } from "@/pages/SearchResult";
 import { Favorites } from "@/pages/Favorites";
 import { TimeCorridor } from "@/pages/TimeCorridor";
+import { CharacterMuseum } from "@/pages/CharacterMuseum";
+import { CharacterDetail } from "@/pages/CharacterDetail";
+import { CharacterBattle } from "@/pages/CharacterBattle";
+import { CharacterLeaderboard } from "@/pages/CharacterLeaderboard";
+import { CharacterCollection } from "@/pages/CharacterCollection";
 
 export default function App() {
   return (
@@ -20,6 +25,11 @@ export default function App() {
             <Route path="/anime/:id" element={<AnimeDetail />} />
             <Route path="/search" element={<SearchResult />} />
             <Route path="/favorites" element={<Favorites />} />
+            <Route path="/characters" element={<CharacterMuseum />} />
+            <Route path="/character/:id" element={<CharacterDetail />} />
+            <Route path="/characters/battle" element={<CharacterBattle />} />
+            <Route path="/characters/leaderboard" element={<CharacterLeaderboard />} />
+            <Route path="/characters/collection" element={<CharacterCollection />} />
             <Route path="*" element={
               <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">

@@ -11,6 +11,7 @@ interface CharacterUniverseState {
   discoverSimilar: (pairId: string) => void;
   completeQuest: (questId: string, reward: number) => void;
   toggleExpandCharacter: (characterId: string) => void;
+  clearExpandedCharacters: () => void;
   setActiveFilter: (filter: 'all' | 'friend' | 'rival' | 'mentor' | 'family') => void;
   isRelationDiscovered: (relationId: string) => boolean;
   isSimilarDiscovered: (pairId: string) => boolean;
@@ -76,6 +77,10 @@ export const useCharacterUniverseStore = create<CharacterUniverseState>()(
         } else {
           set({ expandedCharacters: [...expandedCharacters, characterId] });
         }
+      },
+
+      clearExpandedCharacters: () => {
+        set({ expandedCharacters: [] });
       },
 
       setActiveFilter: (filter) => {

@@ -70,6 +70,7 @@ export const CharacterUniverse = () => {
     discoverSimilar,
     completeQuest,
     toggleExpandCharacter,
+    clearExpandedCharacters,
     setActiveFilter,
     isRelationDiscovered,
     isQuestCompleted,
@@ -384,17 +385,24 @@ export const CharacterUniverse = () => {
   );
 
   const handleQuestCheck = useCallback(
-    (questId: string, targetIds: string[], reward: number) => {
+    (questId: string, questType: string, targetIds: string[], reward: number) => {
       if (isQuestCompleted(questId)) return;
 
-      const allExpanded = targetIds.every((id) => {
-        return expandedCharacters.includes(id) || selectedCharacter === id;
-      });
-      if (allExpanded) {
+      let completed = false;
+
+      if (questType === 'discover_link') {
+        completed = targetIds.every((relId) => isRelationDiscovered(relId));
+      } else {
+        completed = targetIds.every((id) => {
+          return expandedCharacters.includes(id) || selectedCharacter === id;
+        });
+      }
+
+      if (completed) {
         completeQuest(questId, reward);
       }
     },
-    [isQuestCompleted, expandedCharacters, selectedCharacter, completeQuest]
+    [isQuestCompleted, isRelationDiscovered, expandedCharacters, selectedCharacter, completeQuest]
   );
 
   const handlePathSearch = useCallback(() => {
@@ -612,8 +620,17 @@ export const CharacterUniverse = () => {
               <button
                 onClick={() => {
                   setSelectedCharacter(null);
+                  setHoveredCharacter(null);
+                  setHoveredEdge(null);
                   setFoundPath(null);
-                  useCharacterUniverseStore.getState().expandedCharacters = [];
+                  setPathStart(null);
+                  setPathEnd(null);
+                  setQuestHintVisible(null);
+                  setScale(1);
+                  setActiveFilter('all');
+                  clearExpandedCharacters();
+                  nodesRef.current = [];
+                  setNodesReady(false);
                 }}
                 className="glass-button px-3 py-1.5 text-sm text-museum-textMuted hover:text-white flex items-center gap-1.5"
               >
@@ -904,8 +921,9 @@ export const CharacterUniverse = () => {
               </div>
             </div>
 
-            {showPathPanel && (
+            {(showPathPanel || showQuestPanel || showSimilarPanel) && (
               <div className="w-80 flex-shrink-0 space-y-3 max-h-[600px] overflow-y-auto scrollbar-hide">
+                {showPathPanel && (
                 <div className="glass-card p-4">
                   <h3 className="font-display text-lg font-bold text-white flex items-center gap-2 mb-4">
                     <Route className="w-5 h-5 text-purple-400" />
@@ -1039,11 +1057,9 @@ export const CharacterUniverse = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
+                )}
 
-            {showQuestPanel && !showPathPanel && (
-              <div className="w-80 flex-shrink-0 space-y-3 max-h-[600px] overflow-y-auto scrollbar-hide">
+                {showQuestPanel && (
                 <div className="glass-card p-4">
                   <h3 className="font-display text-lg font-bold text-white flex items-center gap-2 mb-4">
                     <Target className="w-5 h-5 text-yellow-400" />
@@ -1115,7 +1131,7 @@ export const CharacterUniverse = () => {
 
                           {!completed && (
                             <button
-                              onClick={() => handleQuestCheck(quest.id, quest.targetIds, quest.reward)}
+                              onClick={() => handleQuestCheck(quest.id, quest.type, quest.targetIds, quest.reward)}
                               className="mt-2 w-full py-1.5 rounded-lg text-xs font-medium bg-white/5 text-museum-textMuted hover:bg-white/10 hover:text-white transition-all"
                             >
                               检查完成情况
@@ -1126,11 +1142,9 @@ export const CharacterUniverse = () => {
                     })}
                   </div>
                 </div>
-              </div>
-            )}
+                )}
 
-            {showSimilarPanel && !showQuestPanel && (
-              <div className="w-80 flex-shrink-0 space-y-3 max-h-[600px] overflow-y-auto scrollbar-hide">
+                {showSimilarPanel && (
                 <div className="glass-card p-4">
                   <h3 className="font-display text-lg font-bold text-white flex items-center gap-2 mb-4">
                     <Zap className="w-5 h-5 text-cyan-400" />
@@ -1168,7 +1182,7 @@ export const CharacterUniverse = () => {
                             </div>
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-semibold text-white truncate">
-                                {charA.name} & {charB.name}
+                                {charA.name} &amp; {charB.name}
                               </p>
                             </div>
                             {discovered && <CheckCircle2 className="w-4 h-4 text-cyan-400 flex-shrink-0" />}
@@ -1191,6 +1205,7 @@ export const CharacterUniverse = () => {
                     })}
                   </div>
                 </div>
+                )}
               </div>
             )}
           </div>

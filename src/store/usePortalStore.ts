@@ -29,7 +29,7 @@ interface PortalState {
 }
 
 const initialStats: PortalStats = {
-  unlockedWorlds: ['forest', 'ocean'],
+  unlockedWorlds: ['forest', 'ocean', 'space', 'school'],
   collectedFragments: [],
   discoveredStories: [],
   totalPoints: 0,
@@ -48,12 +48,18 @@ export const usePortalStore = create<PortalState>()(
 
       init: () => {
         const now = Date.now();
-        set((state) => ({
-          stats: {
-            ...state.stats,
-            lastVisit: now,
-          },
-        }));
+        const allWorlds = ['forest', 'ocean', 'space', 'school'];
+        set((state) => {
+          const currentUnlocked = state.stats.unlockedWorlds || [];
+          const newUnlocked = [...new Set([...currentUnlocked, ...allWorlds])];
+          return {
+            stats: {
+              ...state.stats,
+              unlockedWorlds: newUnlocked,
+              lastVisit: now,
+            },
+          };
+        });
       },
 
       visitWorld: (worldId: string) => {
@@ -88,20 +94,25 @@ export const usePortalStore = create<PortalState>()(
       },
 
       discoverStory: (story: HiddenStory) => {
-        if (get().stats.discoveredStories.includes(story.id)) {
-          return false;
+        const isNew = !get().stats.discoveredStories.includes(story.id);
+
+        if (isNew) {
+          set((state) => ({
+            stats: {
+              ...state.stats,
+              discoveredStories: [...state.stats.discoveredStories, story.id],
+            },
+            showStoryModal: true,
+            currentStory: story,
+          }));
+        } else {
+          set({
+            showStoryModal: true,
+            currentStory: story,
+          });
         }
 
-        set((state) => ({
-          stats: {
-            ...state.stats,
-            discoveredStories: [...state.stats.discoveredStories, story.id],
-          },
-          showStoryModal: true,
-          currentStory: story,
-        }));
-
-        return true;
+        return isNew;
       },
 
       isFragmentCollected: (fragmentId: string) => {

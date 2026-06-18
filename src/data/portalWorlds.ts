@@ -189,7 +189,7 @@ const oceanWorld: PortalWorld = {
       story: '小龙女是东海龙王最疼爱的女儿，她善良勇敢，经常偷偷溜出龙宫去人间玩耍。',
       rarity: 'rare',
       points: 50,
-      position: { x: 250, y: 600 },
+      position: { x: 150, y: 600 },
     },
     {
       id: 'ocean-frag-4',
@@ -202,7 +202,7 @@ const oceanWorld: PortalWorld = {
       story: '在希腊圣域的海边，星矢经过六年的艰苦修行，终于获得了天马座圣衣。',
       rarity: 'common',
       points: 30,
-      position: { x: 800, y: 650 },
+      position: { x: 800, y: 620 },
     },
     {
       id: 'ocean-frag-5',

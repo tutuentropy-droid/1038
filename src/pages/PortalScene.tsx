@@ -27,6 +27,8 @@ export const PortalScene = () => {
     visitWorld,
     closeFragmentModal,
     closeStoryModal,
+    openFragmentModal,
+    openStoryModal,
     showFragmentModal,
     currentFragment,
     showStoryModal,
@@ -107,7 +109,6 @@ export const PortalScene = () => {
     if (!world) return null;
 
     for (const story of world.hiddenStories) {
-      if (isStoryDiscovered(story.id)) continue;
       if (!canUnlockStory(story, world.id)) continue;
 
       const dist = Math.sqrt(
@@ -119,7 +120,7 @@ export const PortalScene = () => {
       }
     }
     return null;
-  }, [world, isStoryDiscovered, canUnlockStory]);
+  }, [world, canUnlockStory]);
 
   const gameLoop = useCallback(() => {
     if (!world || showFragmentModal || showStoryModal || showCollectionPanel) {
@@ -409,15 +410,15 @@ export const PortalScene = () => {
             top: story.position.y - 20,
           }}
           onClick={() => {
-            if (canUnlock && !discovered) {
+            if (canUnlock) {
               discoverStory(story);
             }
           }}
         >
           <div
             className={cn(
-              'w-10 h-10 rounded-full flex items-center justify-center',
-              discovered ? 'bg-green-600' : canUnlock ? 'bg-gradient-to-br from-cyan-500 to-blue-600 cursor-pointer' : 'bg-gray-600'
+              'w-10 h-10 rounded-full flex items-center justify-center cursor-pointer',
+              discovered ? 'bg-green-600' : canUnlock ? 'bg-gradient-to-br from-cyan-500 to-blue-600' : 'bg-gray-600 cursor-not-allowed'
             )}
             style={{
               boxShadow: isNearby && canUnlock ? '0 0 20px #06b6d4' : 'none',
@@ -426,10 +427,15 @@ export const PortalScene = () => {
             <BookOpen className="w-5 h-5 text-white" />
           </div>
 
-          {isNearby && canUnlock && !discovered && (
+          {isNearby && canUnlock && (
             <div className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap animate-bounce">
-              <div className="bg-cyan-900/90 text-cyan-100 text-xs px-2 py-1 rounded-lg">
-                按空格阅读
+              <div className={cn(
+                'text-xs px-2 py-1 rounded-lg',
+                discovered 
+                  ? 'bg-green-900/90 text-green-100' 
+                  : 'bg-cyan-900/90 text-cyan-100'
+              )}>
+                {discovered ? '按空格重看' : '按空格阅读'}
               </div>
             </div>
           )}
@@ -438,6 +444,14 @@ export const PortalScene = () => {
             <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap">
               <div className="text-xs text-museum-textMuted">
                 🔒 {story.requiredFragments}碎片解锁
+              </div>
+            </div>
+          )}
+
+          {discovered && canUnlock && !isNearby && (
+            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap">
+              <div className="text-xs text-green-400">
+                ✓ 已发现
               </div>
             </div>
           )}
@@ -753,9 +767,15 @@ export const PortalScene = () => {
                     <div
                       key={fragment.id}
                       className={cn(
-                        'p-3 rounded-xl flex items-center gap-3',
-                        collected ? 'bg-white/10' : 'bg-white/5 opacity-50'
+                        'p-3 rounded-xl flex items-center gap-3 transition-colors',
+                        collected ? 'bg-white/10 hover:bg-white/15 cursor-pointer' : 'bg-white/5 opacity-50'
                       )}
+                      onClick={() => {
+                        if (collected) {
+                          openFragmentModal(fragment);
+                          setShowCollectionPanel(false);
+                        }
+                      }}
                     >
                       <div
                         className={cn(
@@ -796,13 +816,19 @@ export const PortalScene = () => {
                     <div
                       key={story.id}
                       className={cn(
-                        'p-4 rounded-xl',
+                        'p-4 rounded-xl transition-colors',
                         discovered
-                          ? 'bg-cyan-500/10 border border-cyan-500/20'
+                          ? 'bg-cyan-500/10 border border-cyan-500/20 hover:bg-cyan-500/15 cursor-pointer'
                           : canUnlock
                           ? 'bg-white/5 border border-white/10'
                           : 'bg-white/5 opacity-50 border border-white/5'
                       )}
+                      onClick={() => {
+                        if (discovered) {
+                          openStoryModal(story);
+                          setShowCollectionPanel(false);
+                        }
+                      }}
                     >
                       <div className="flex items-center gap-3">
                         <div
@@ -823,7 +849,7 @@ export const PortalScene = () => {
                           </div>
                           <div className="text-museum-textMuted text-sm">
                             {discovered
-                              ? `《${story.animeTitle}》`
+                              ? `《${story.animeTitle}》 · 点击重看`
                               : canUnlock
                               ? '按空格发现故事'
                               : `需要 ${story.requiredFragments} 个碎片解锁`}

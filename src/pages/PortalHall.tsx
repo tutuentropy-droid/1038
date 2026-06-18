@@ -7,11 +7,12 @@ import { cn } from '@/lib/utils';
 
 export const PortalHall = () => {
   const navigate = useNavigate();
-  const { stats, getWorldProgress, isFragmentCollected } = usePortalStore();
+  const { stats, getWorldProgress, isFragmentCollected, init } = usePortalStore();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    init();
+  }, [init]);
 
   return (
     <div className="min-h-screen page-transition-enter">

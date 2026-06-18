@@ -61,11 +61,13 @@ export const useTheaterStore = create<TheaterState>()(
 
           const genreCount: Record<string, number> = {};
           newRatings.forEach((r) => {
-            const anime = animes.find((a) => a.id === r.animeId);
-            if (anime) {
-              anime.genres.forEach((g) => {
-                genreCount[g] = (genreCount[g] || 0) + 1;
-              });
+            if (r.score >= 6) {
+              const anime = animes.find((a) => a.id === r.animeId);
+              if (anime) {
+                anime.genres.forEach((g) => {
+                  genreCount[g] = (genreCount[g] || 0) + (r.score - 5);
+                });
+              }
             }
           });
           const topGenres = Object.entries(genreCount)
@@ -144,14 +146,19 @@ export const useTheaterStore = create<TheaterState>()(
 
         const genreCount: Record<string, number> = {};
         const eraCount: Record<string, number> = {};
+        const likedAnimeIds: string[] = [];
 
         ratings.forEach((r) => {
-          const anime = animes.find((a) => a.id === r.animeId);
-          if (anime) {
-            anime.genres.forEach((g) => {
-              genreCount[g] = (genreCount[g] || 0) + r.score;
-            });
-            eraCount[anime.era] = (eraCount[anime.era] || 0) + r.score;
+          if (r.score >= 6) {
+            const anime = animes.find((a) => a.id === r.animeId);
+            if (anime) {
+              const weight = r.score - 5;
+              anime.genres.forEach((g) => {
+                genreCount[g] = (genreCount[g] || 0) + weight;
+              });
+              eraCount[anime.era] = (eraCount[anime.era] || 0) + weight;
+              likedAnimeIds.push(r.animeId);
+            }
           }
         });
 
@@ -172,7 +179,7 @@ export const useTheaterStore = create<TheaterState>()(
           favoriteGenres,
           favoriteEras,
           averageRating: Math.round(averageRating * 10) / 10,
-          ratedAnimeIds: ratings.map((r) => r.animeId),
+          ratedAnimeIds: likedAnimeIds,
           commentCount: comments.length,
         };
       },

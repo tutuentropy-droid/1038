@@ -649,7 +649,7 @@ export const AnimationTheater = () => {
                     onClick={() => setRatingScore(score)}
                     onMouseEnter={() => setHoverRating(score)}
                     onMouseLeave={() => setHoverRating(0)}
-                    className="transition-all duration-200 transform"
+                    className="transition-all duration-200 w-8 h-8 flex items-center justify-center flex-shrink-0"
                   >
                     <Star
                       className={cn(
@@ -663,21 +663,23 @@ export const AnimationTheater = () => {
                 ))}
               </div>
 
-              {(hoverRating || ratingScore) > 0 && (
-                <div className="text-center mb-6">
-                  <span className="text-3xl font-bold text-yellow-400">
-                    {hoverRating || ratingScore}
-                  </span>
-                  <span className="text-lg text-museum-textMuted">/10</span>
-                  <p className="text-xs text-museum-textMuted mt-1">
-                    {(hoverRating || ratingScore) >= 9 ? '神作！永世经典' :
-                     (hoverRating || ratingScore) >= 8 ? '优秀！强烈推荐' :
-                     (hoverRating || ratingScore) >= 7 ? '不错！值得一看' :
-                     (hoverRating || ratingScore) >= 6 ? '还行，中规中矩' :
-                     (hoverRating || ratingScore) >= 5 ? '一般般' : '不太推荐'}
-                  </p>
-                </div>
-              )}
+              <div className="min-h-[88px] mb-6">
+                {(hoverRating || ratingScore) > 0 && (
+                  <div className="text-center opacity-100 transition-opacity duration-200">
+                    <span className="text-3xl font-bold text-yellow-400">
+                      {hoverRating || ratingScore}
+                    </span>
+                    <span className="text-lg text-museum-textMuted">/10</span>
+                    <p className="text-xs text-museum-textMuted mt-1">
+                      {(hoverRating || ratingScore) >= 9 ? '神作！永世经典' :
+                       (hoverRating || ratingScore) >= 8 ? '优秀！强烈推荐' :
+                       (hoverRating || ratingScore) >= 7 ? '不错！值得一看' :
+                       (hoverRating || ratingScore) >= 6 ? '还行，中规中矩' :
+                       (hoverRating || ratingScore) >= 5 ? '一般般' : '不太推荐'}
+                    </p>
+                  </div>
+                )}
+              </div>
 
               <button
                 onClick={handleRate}

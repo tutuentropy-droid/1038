@@ -34,6 +34,8 @@ export const ScratchRepairGame = ({
   const [showSuccess, setShowSuccess] = useState(false);
   const lastPosRef = useRef<{ x: number; y: number } | null>(null);
   const repairedPathRef = useRef<Set<string>>(new Set());
+  const mistakeCooldownRef = useRef<number>(0);
+  const lastHitTimeRef = useRef<number>(0);
 
   useEffect(() => {
     const newScratches: Scratch[] = [];
@@ -72,6 +74,8 @@ export const ScratchRepairGame = ({
   }, []);
 
   const checkScratchCollision = useCallback((mouseX: number, mouseY: number) => {
+    let hitAnyScratch = false;
+
     setScratches((prev) =>
       prev.map((scratch) => {
         if (scratch.repaired) return scratch;
@@ -87,16 +91,17 @@ export const ScratchRepairGame = ({
         const rotatedY = -dx * sin + dy * cos;
 
         const halfLength = scratch.length / 2;
-        const hitWidth = scratch.width + 4;
+        const hitWidth = scratch.width + 10;
 
         if (
           Math.abs(rotatedX) <= halfLength &&
           Math.abs(rotatedY) <= hitWidth
         ) {
-          const pathKey = `${scratch.id}-${Math.round(mouseX)}-${Math.round(mouseY)}`;
+          hitAnyScratch = true;
+          const pathKey = `${scratch.id}-${Math.round(mouseX * 2)}-${Math.round(mouseY * 2)}`;
           if (!repairedPathRef.current.has(pathKey)) {
             repairedPathRef.current.add(pathKey);
-            const newProgress = Math.min(100, scratch.progress + 8);
+            const newProgress = Math.min(100, scratch.progress + 12);
             return {
               ...scratch,
               progress: newProgress,
@@ -107,7 +112,19 @@ export const ScratchRepairGame = ({
         return scratch;
       })
     );
-  }, []);
+
+    const now = Date.now();
+    if (hitAnyScratch) {
+      lastHitTimeRef.current = now;
+    } else if (isDragging) {
+      const timeSinceLastHit = now - lastHitTimeRef.current;
+      const cooldownOK = now - mistakeCooldownRef.current > 500;
+      if (timeSinceLastHit > 800 && cooldownOK && lastHitTimeRef.current > 0) {
+        mistakeCooldownRef.current = now;
+        setMistakes((prev) => prev + 1);
+      }
+    }
+  }, [isDragging]);
 
   const handleStart = useCallback((e: React.MouseEvent | React.TouchEvent) => {
     setIsDragging(true);
@@ -255,16 +272,10 @@ export const ScratchRepairGame = ({
             )}
           </div>
 
-          <div className="mt-4 flex items-center justify-between text-sm">
+          <div className="mt-4 text-sm">
             <div className="text-museum-textMuted">
-              💡 提示：沿着划痕方向擦拭效果更好
+              💡 提示：沿着划痕方向擦拭效果更好，注意不要蹭到其他区域
             </div>
-            <button
-              onClick={() => setScratches(prev => prev.map(s => ({ ...s, repaired: true })))}
-              className="text-museum-textMuted hover:text-white transition-colors text-xs"
-            >
-              跳过演示
-            </button>
           </div>
         </div>
       </div>

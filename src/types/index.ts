@@ -513,3 +513,96 @@ export interface SandboxStats {
   researchEfficiency: number;
   evolutionSpeed: number;
 }
+
+export type FestivalTheme =
+  | 'mecha'
+  | 'magical_girl'
+  | 'hot_blooded'
+  | 'mystery'
+  | 'family'
+  | 'fantasy'
+  | 'sports'
+  | 'comedy'
+  | 'dark_fantasy'
+  | 'chinese_classic';
+
+export interface FestivalThemeInfo {
+  id: FestivalTheme;
+  name: string;
+  description: string;
+  icon: string;
+  color: string;
+  accentColor: string;
+  bgGradient: string;
+  tagline: string;
+  genreFilter: string[];
+}
+
+export interface Screening {
+  id: string;
+  animeId: string;
+  timeSlot: string;
+  hall: string;
+  seatCount: number;
+  reservedSeats: number;
+}
+
+export interface FilmFestival {
+  id: string;
+  date: string;
+  theme: FestivalTheme;
+  themeInfo: FestivalThemeInfo;
+  screenings: Screening[];
+  description: string;
+  bannerImage: string;
+  isActive: boolean;
+}
+
+export interface UserRating {
+  animeId: string;
+  festivalId: string;
+  score: number;
+  timestamp: number;
+}
+
+export interface UserComment {
+  id: string;
+  animeId: string;
+  festivalId: string;
+  content: string;
+  score: number;
+  timestamp: number;
+  author: string;
+}
+
+export interface UserPreference {
+  favoriteGenres: string[];
+  favoriteEras: EraType[];
+  averageRating: number;
+  ratedAnimeIds: string[];
+  commentCount: number;
+}
+
+export interface RouteStop {
+  animeId: string;
+  reason: string;
+  order: number;
+  timeSlot: string;
+  hall: string;
+  matchScore: number;
+}
+
+export interface RecommendedRoute {
+  festivalId: string;
+  stops: RouteStop[];
+  totalMatchScore: number;
+  generatedAt: number;
+}
+
+export interface TheaterStats {
+  totalRatings: number;
+  totalComments: number;
+  festivalsAttended: string[];
+  averageRatingGiven: number;
+  topGenres: string[];
+}

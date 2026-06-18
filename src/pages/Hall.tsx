@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, ChevronDown, Film, Star, Tv, Clock, ArrowRight, Map, Gamepad2, Wrench, Clapperboard, FlaskConical, Layers } from 'lucide-react';
+import { Sparkles, ChevronDown, Film, Star, Tv, Clock, ArrowRight, Map, Gamepad2, Wrench, Clapperboard, FlaskConical, Layers, Ticket } from 'lucide-react';
 import { ERA_INFO } from '@/types';
 import { animes } from '@/data/animes';
 import { EraCard } from '@/components/EraCard';
@@ -288,6 +288,41 @@ export const Hall = () => {
               >
                 开始演化
                 <FlaskConical className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+              </Link>
+            </div>
+          </div>
+
+          <div className="glass-card p-8 md:p-10 mb-12 relative overflow-hidden opacity-0 animate-slide-up stagger-6" style={{ animationFillMode: 'forwards' }}>
+            <div className="absolute inset-0 bg-gradient-to-r from-rose-500/10 via-amber-500/10 to-cyan-500/10" />
+            <div className="absolute top-0 right-0 w-80 h-80 bg-rose-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute inset-0" style={{
+                backgroundImage: 'radial-gradient(circle at 25% 40%, rgba(244,63,94,0.2) 0%, transparent 40%), radial-gradient(circle at 75% 60%, rgba(6,182,212,0.2) 0%, transparent 40%)'
+              }} />
+            </div>
+
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex items-center gap-5">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-500 via-amber-400 to-cyan-400 flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <Ticket className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-2">
+                    动画大剧院
+                  </h3>
+                  <p className="text-museum-textMuted max-w-md">
+                    每天不同主题的动画电影节！为参展作品打分、发表评论，还能获得根据你喜好自动生成的推荐影展路线！
+                  </p>
+                </div>
+              </div>
+              <Link
+                to="/theater"
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-rose-500 via-amber-400 to-cyan-400 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                进入剧院
+                <Ticket className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
               </Link>
             </div>
           </div>

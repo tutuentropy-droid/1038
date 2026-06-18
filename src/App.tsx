@@ -21,6 +21,7 @@ import { PortalScene } from "@/pages/PortalScene";
 import { CharacterUniverse } from "@/pages/CharacterUniverse";
 import { DirectorChallenge } from "@/pages/DirectorChallenge";
 import { EvolutionSandbox } from "@/pages/EvolutionSandbox";
+import { AnimationTheater } from "@/pages/AnimationTheater";
 import { NewDiscoveryModal } from "@/components/NewDiscoveryModal";
 
 export default function App() {
@@ -51,6 +52,7 @@ export default function App() {
             <Route path="/portal" element={<PortalHall />} />
             <Route path="/portal/:worldId" element={<PortalScene />} />
             <Route path="/evolution-sandbox" element={<EvolutionSandbox />} />
+            <Route path="/theater" element={<AnimationTheater />} />
             <Route path="*" element={
               <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">

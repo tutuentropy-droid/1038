@@ -427,3 +427,87 @@ export interface UniverseStats {
   completedQuests: string[];
   totalPoints: number;
 }
+
+export type TechEra = 'pioneer' | 'cel' | 'tv_golden' | 'digital_revolution' | 'modern_cg' | 'ai_future';
+
+export interface VisualCapability {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  example?: string;
+}
+
+export interface ProductionTool {
+  id: string;
+  name: string;
+  description: string;
+  category: 'drawing' | 'coloring' | 'editing' | 'compositing' | '3d' | 'ai';
+  era: TechEra;
+  icon: string;
+}
+
+export interface TechMilestone {
+  id: string;
+  name: string;
+  year: string;
+  description: string;
+  impact: string;
+  visual: string;
+  requiredEra: TechEra;
+  cost: number;
+}
+
+export interface StylePhase {
+  id: TechEra;
+  name: string;
+  period: string;
+  tagline: string;
+  description: string;
+  longDescription: string;
+  color: string;
+  accentColor: string;
+  bgGradient: string;
+  visualStyle: string;
+  keyWorks: string[];
+  visualFeatures: string[];
+  unlockedCapabilities: string[];
+  unlockedTools: string[];
+  milestones: string[];
+  position: { x: number; y: number };
+  precedingEra?: TechEra;
+}
+
+export interface EvolutionEvent {
+  id: string;
+  year: number;
+  title: string;
+  description: string;
+  type: 'tech' | 'art' | 'cultural' | 'milestone';
+  era: TechEra;
+}
+
+export interface SandboxState {
+  currentEra: TechEra;
+  unlockedEras: TechEra[];
+  researchPoints: number;
+  totalResearchPoints: number;
+  unlockedMilestones: string[];
+  unlockedCapabilities: string[];
+  unlockedTools: string[];
+  currentView: 'timeline' | 'workshop' | 'gallery' | 'comparison';
+  selectedMilestone: string | null;
+  selectedTool: string | null;
+  selectedCapability: string | null;
+  eraTransitionProgress: number;
+  isTransitioning: boolean;
+}
+
+export interface SandboxStats {
+  totalErasUnlocked: number;
+  totalMilestones: number;
+  totalCapabilities: number;
+  totalTools: number;
+  researchEfficiency: number;
+  evolutionSpeed: number;
+}

@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, ChevronDown, Film, Star, Tv, Clock, ArrowRight, Map, Gamepad2, Wrench, Clapperboard } from 'lucide-react';
+import { Sparkles, ChevronDown, Film, Star, Tv, Clock, ArrowRight, Map, Gamepad2, Wrench, Clapperboard, FlaskConical, Layers } from 'lucide-react';
 import { ERA_INFO } from '@/types';
 import { animes } from '@/data/animes';
 import { EraCard } from '@/components/EraCard';
@@ -244,6 +244,50 @@ export const Hall = () => {
               >
                 开始挑战
                 <Clapperboard className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+              </Link>
+            </div>
+          </div>
+
+          <div className="glass-card p-8 md:p-10 mb-12 relative overflow-hidden opacity-0 animate-slide-up stagger-5" style={{ animationFillMode: 'forwards' }}>
+            <div className="absolute inset-0 bg-gradient-to-r from-violet-500/10 via-fuchsia-500/10 to-amber-500/10" />
+            <div className="absolute top-0 right-0 w-80 h-80 bg-violet-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-amber-500/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+
+            <div className="absolute inset-0 opacity-20">
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: `
+                    linear-gradient(135deg, rgba(139,92,246,0.1) 0%, transparent 50%),
+                    linear-gradient(225deg, rgba(251,191,36,0.1) 0%, transparent 50%)
+                  `,
+                }}
+              />
+              <div className="absolute inset-0" style={{
+                backgroundImage: 'radial-gradient(circle at 30% 20%, rgba(217,70,239,0.2) 0%, transparent 30%), radial-gradient(circle at 70% 80%, rgba(251,191,36,0.2) 0%, transparent 30%)'
+              }} />
+            </div>
+
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex items-center gap-5">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 via-fuchsia-500 to-amber-400 flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <Layers className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-2">
+                    动画文明演化沙盘
+                  </h3>
+                  <p className="text-museum-textMuted max-w-md">
+                    观察动画风格从手绘时代逐步演化到AI时代，解锁技术节点，体验新的表现能力和制作工具！
+                  </p>
+                </div>
+              </div>
+              <Link
+                to="/evolution-sandbox"
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-violet-500 via-fuchsia-500 to-amber-400 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                开始演化
+                <FlaskConical className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
               </Link>
             </div>
           </div>

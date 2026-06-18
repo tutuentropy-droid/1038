@@ -388,3 +388,42 @@ export interface PortalPlayerState {
   direction: PortalDirection;
   isMoving: boolean;
 }
+
+export type CrossRelationType = 'friend' | 'rival' | 'mentor' | 'family';
+
+export interface CrossAnimeRelation {
+  id: string;
+  fromCharacterId: string;
+  toCharacterId: string;
+  type: CrossRelationType;
+  label: string;
+  description: string;
+}
+
+export interface SimilarCharacterPair {
+  id: string;
+  characterIdA: string;
+  characterIdB: string;
+  reason: string;
+  tags: string[];
+}
+
+export type RelationQuestType = 'find_similar' | 'trace_path' | 'discover_link';
+
+export interface RelationQuest {
+  id: string;
+  title: string;
+  description: string;
+  type: RelationQuestType;
+  hint: string;
+  targetIds: string[];
+  reward: number;
+  isCompleted: boolean;
+}
+
+export interface UniverseStats {
+  discoveredRelations: string[];
+  discoveredSimilar: string[];
+  completedQuests: string[];
+  totalPoints: number;
+}

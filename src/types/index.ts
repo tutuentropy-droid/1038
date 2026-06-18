@@ -325,3 +325,66 @@ export interface FramePuzzleGameState {
   frames: { id: string; correctIndex: number; currentIndex: number; image: string }[];
   moves: number;
 }
+
+export type WorldTheme = 'forest' | 'ocean' | 'space' | 'school' | 'fantasy' | 'city';
+
+export interface MemoryFragment {
+  id: string;
+  characterId: string;
+  characterName: string;
+  characterImage: string;
+  animeId: string;
+  animeTitle: string;
+  quote: string;
+  story: string;
+  rarity: 'common' | 'rare' | 'epic' | 'legendary';
+  points: number;
+  position: Position;
+}
+
+export interface PortalWorld {
+  id: string;
+  name: string;
+  theme: WorldTheme;
+  description: string;
+  animeIds: string[];
+  bgGradient: string;
+  accentColor: string;
+  icon: string;
+  mapWidth: number;
+  mapHeight: number;
+  obstacles: { x: number; y: number; width: number; height: number; type?: string }[];
+  decorations: { id: string; type: string; position: Position; scale?: number }[];
+  memoryFragments: MemoryFragment[];
+  hiddenStories: HiddenStory[];
+  entryPosition: Position;
+}
+
+export interface HiddenStory {
+  id: string;
+  title: string;
+  content: string;
+  animeId: string;
+  animeTitle: string;
+  position: Position;
+  unlockCondition: string;
+  requiredFragments?: number;
+  isUnlocked?: boolean;
+}
+
+export interface PortalStats {
+  unlockedWorlds: string[];
+  collectedFragments: string[];
+  discoveredStories: string[];
+  totalPoints: number;
+  visitCount: Record<string, number>;
+  lastVisit?: number;
+}
+
+export type PortalDirection = 'up' | 'down' | 'left' | 'right';
+
+export interface PortalPlayerState {
+  position: Position;
+  direction: PortalDirection;
+  isMoving: boolean;
+}

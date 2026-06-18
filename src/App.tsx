@@ -16,6 +16,8 @@ import { TreasureHunt } from "@/pages/TreasureHunt";
 import { AchievementCenter } from "@/pages/AchievementCenter";
 import { ExploreMap } from "@/pages/ExploreMap";
 import { RepairCenter } from "@/pages/RepairCenter";
+import { PortalHall } from "@/pages/PortalHall";
+import { PortalScene } from "@/pages/PortalScene";
 import { NewDiscoveryModal } from "@/components/NewDiscoveryModal";
 
 export default function App() {
@@ -41,6 +43,8 @@ export default function App() {
             <Route path="/treasure-hunt" element={<TreasureHunt />} />
             <Route path="/achievements" element={<AchievementCenter />} />
             <Route path="/repair-center" element={<RepairCenter />} />
+            <Route path="/portal" element={<PortalHall />} />
+            <Route path="/portal/:worldId" element={<PortalScene />} />
             <Route path="*" element={
               <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Film, Heart, Search, Menu, X, Clock, Users, Hammer, Search as SearchIcon, Trophy, Gamepad2, Wrench, Sparkles, Globe } from 'lucide-react';
+import { Film, Heart, Search, Menu, X, Clock, Users, Hammer, Search as SearchIcon, Trophy, Gamepad2, Wrench, Sparkles, Globe, Clapperboard } from 'lucide-react';
 import { useFavoritesStore } from '@/store/useFavoritesStore';
 import { useCharacterCollectionStore } from '@/store/useCharacterCollectionStore';
 import { useTreasureHuntStore } from '@/store/useTreasureHuntStore';
@@ -40,6 +40,7 @@ export const Navbar = () => {
     { path: '/characters', label: '角色博物馆', icon: Users },
     { path: '/character-universe', label: '关系宇宙', icon: Globe },
     { path: '/workshop', label: '制作工坊', icon: Hammer },
+    { path: '/director-challenge', label: '导演挑战', icon: Clapperboard },
     { path: '/repair-center', label: '修复中心', icon: Wrench },
     { path: '/treasure-hunt', label: '寻宝模式', icon: SearchIcon },
     { path: '/achievements', label: '成就中心', icon: Trophy },

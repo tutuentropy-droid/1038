@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, ChevronDown, Film, Star, Tv, Clock, ArrowRight, Map, Gamepad2, Wrench } from 'lucide-react';
+import { Sparkles, ChevronDown, Film, Star, Tv, Clock, ArrowRight, Map, Gamepad2, Wrench, Clapperboard } from 'lucide-react';
 import { ERA_INFO } from '@/types';
 import { animes } from '@/data/animes';
 import { EraCard } from '@/components/EraCard';
@@ -203,6 +203,47 @@ export const Hall = () => {
               >
                 开始修复
                 <Wrench className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+              </Link>
+            </div>
+          </div>
+
+          <div className="glass-card p-8 md:p-10 mb-12 relative overflow-hidden opacity-0 animate-slide-up stagger-4" style={{ animationFillMode: 'forwards' }}>
+            <div className="absolute inset-0 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-cyan-500/10" />
+            <div className="absolute top-0 right-0 w-80 h-80 bg-pink-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+
+            <div className="absolute inset-0 opacity-20">
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: `
+                    radial-gradient(circle at 20% 30%, rgba(236,72,153,0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 70%, rgba(6,182,212,0.3) 0%, transparent 50%)
+                  `,
+                }}
+              />
+            </div>
+
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex items-center gap-5">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500 via-purple-500 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <Clapperboard className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-2">
+                    动画导演挑战馆
+                  </h3>
+                  <p className="text-museum-textMuted max-w-md">
+                    接受随机生成的动画制作挑战，从角色库、场景库和音乐库中挑选素材，组合出你的创意动画企划！
+                  </p>
+                </div>
+              </div>
+              <Link
+                to="/director-challenge"
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                开始挑战
+                <Clapperboard className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
               </Link>
             </div>
           </div>

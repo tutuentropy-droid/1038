@@ -19,6 +19,7 @@ import { RepairCenter } from "@/pages/RepairCenter";
 import { PortalHall } from "@/pages/PortalHall";
 import { PortalScene } from "@/pages/PortalScene";
 import { CharacterUniverse } from "@/pages/CharacterUniverse";
+import { DirectorChallenge } from "@/pages/DirectorChallenge";
 import { NewDiscoveryModal } from "@/components/NewDiscoveryModal";
 
 export default function App() {
@@ -41,6 +42,7 @@ export default function App() {
             <Route path="/characters/leaderboard" element={<CharacterLeaderboard />} />
             <Route path="/characters/collection" element={<CharacterCollection />} />
             <Route path="/character-universe" element={<CharacterUniverse />} />
+            <Route path="/director-challenge" element={<DirectorChallenge />} />
             <Route path="/workshop" element={<AnimationWorkshop />} />
             <Route path="/treasure-hunt" element={<TreasureHunt />} />
             <Route path="/achievements" element={<AchievementCenter />} />

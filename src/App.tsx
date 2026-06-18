@@ -15,6 +15,7 @@ import { AnimationWorkshop } from "@/pages/AnimationWorkshop";
 import { TreasureHunt } from "@/pages/TreasureHunt";
 import { AchievementCenter } from "@/pages/AchievementCenter";
 import { ExploreMap } from "@/pages/ExploreMap";
+import { RepairCenter } from "@/pages/RepairCenter";
 import { NewDiscoveryModal } from "@/components/NewDiscoveryModal";
 
 export default function App() {
@@ -39,6 +40,7 @@ export default function App() {
             <Route path="/workshop" element={<AnimationWorkshop />} />
             <Route path="/treasure-hunt" element={<TreasureHunt />} />
             <Route path="/achievements" element={<AchievementCenter />} />
+            <Route path="/repair-center" element={<RepairCenter />} />
             <Route path="*" element={
               <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">

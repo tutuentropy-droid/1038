@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Film, Heart, Search, Menu, X, Clock, Users, Hammer, Search as SearchIcon, Trophy, Gamepad2 } from 'lucide-react';
+import { Film, Heart, Search, Menu, X, Clock, Users, Hammer, Search as SearchIcon, Trophy, Gamepad2, Wrench } from 'lucide-react';
 import { useFavoritesStore } from '@/store/useFavoritesStore';
 import { useCharacterCollectionStore } from '@/store/useCharacterCollectionStore';
 import { useTreasureHuntStore } from '@/store/useTreasureHuntStore';
@@ -36,6 +36,7 @@ export const Navbar = () => {
     { path: '/time-corridor', label: '时间长廊', icon: Clock },
     { path: '/characters', label: '角色博物馆', icon: Users },
     { path: '/workshop', label: '制作工坊', icon: Hammer },
+    { path: '/repair-center', label: '修复中心', icon: Wrench },
     { path: '/treasure-hunt', label: '寻宝模式', icon: SearchIcon },
     { path: '/achievements', label: '成就中心', icon: Trophy },
     { path: '/era/80s', label: '80年代', color: 'text-80s-primary' },

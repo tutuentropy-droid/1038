@@ -246,3 +246,82 @@ export interface PlayerState {
   direction: Direction;
   isMoving: boolean;
 }
+
+export type RepairProblemType = 'scratch' | 'fading' | 'missing_frame';
+export type RepairGameType = 'swipe' | 'color_match' | 'frame_puzzle';
+export type RepairDifficulty = 'easy' | 'medium' | 'hard';
+
+export interface RepairProblem {
+  id: string;
+  type: RepairProblemType;
+  name: string;
+  description: string;
+  severity: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  points: number;
+  rotation?: number;
+}
+
+export interface RepairableAnimation {
+  id: string;
+  title: string;
+  originalTitle: string;
+  year: number;
+  era: EraType;
+  poster: string;
+  description: string;
+  problems: RepairProblemType[];
+  currentProblems: RepairProblem[];
+  difficulty: RepairDifficulty;
+  basePoints: number;
+  isRepaired: boolean;
+  repairedAt?: number;
+}
+
+export interface RepairBadge {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  rarity: 'bronze' | 'silver' | 'gold' | 'legendary';
+  requirement: {
+    type: 'repair_count' | 'repair_type' | 'perfect_repair' | 'streak';
+    target: number;
+    problemType?: RepairProblemType;
+  };
+  points: number;
+  unlockedAt?: number;
+}
+
+export interface RepairStats {
+  totalRepairs: number;
+  scratchRepairs: number;
+  fadingRepairs: number;
+  missingFrameRepairs: number;
+  perfectRepairs: number;
+  currentStreak: number;
+  longestStreak: number;
+  totalPoints: number;
+  repairedAnimations: string[];
+  earnedBadges: string[];
+  newBadges: string[];
+  lastRepairAt?: number;
+}
+
+export interface ScratchGameState {
+  scratches: { id: string; x: number; y: number; length: number; rotation: number; repaired: boolean }[];
+  progress: number;
+}
+
+export interface FadingGameState {
+  colorChannels: { id: string; name: string; current: number; target: number }[];
+  selectedChannel: string | null;
+}
+
+export interface FramePuzzleGameState {
+  frames: { id: string; correctIndex: number; currentIndex: number; image: string }[];
+  moves: number;
+}

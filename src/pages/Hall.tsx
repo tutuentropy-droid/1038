@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, ChevronDown, Film, Star, Tv, Clock, ArrowRight, Map, Gamepad2 } from 'lucide-react';
+import { Sparkles, ChevronDown, Film, Star, Tv, Clock, ArrowRight, Map, Gamepad2, Wrench } from 'lucide-react';
 import { ERA_INFO } from '@/types';
 import { animes } from '@/data/animes';
 import { EraCard } from '@/components/EraCard';
@@ -161,6 +161,48 @@ export const Hall = () => {
               >
                 开始冒险
                 <Gamepad2 className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+              </Link>
+            </div>
+          </div>
+
+          <div className="glass-card p-8 md:p-10 mb-12 relative overflow-hidden opacity-0 animate-slide-up stagger-3" style={{ animationFillMode: 'forwards' }}>
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10" />
+            <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+
+            <div className="absolute inset-0 opacity-20">
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: `
+                    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)
+                  `,
+                  backgroundSize: '50px 50px',
+                }}
+              />
+            </div>
+
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex items-center gap-5">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <Wrench className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-2">
+                    动画修复中心
+                  </h3>
+                  <p className="text-museum-textMuted max-w-md">
+                    扮演数字修复师，通过小游戏修复老动画胶片的划痕、褪色和缺帧问题！
+                  </p>
+                </div>
+              </div>
+              <Link
+                to="/repair-center"
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                开始修复
+                <Wrench className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
               </Link>
             </div>
           </div>

@@ -152,6 +152,15 @@ export const museumMapData: MapData = {
       description: '在博物馆中寻找隐藏的宝藏',
       linkPath: '/treasure-hunt',
     },
+    {
+      id: 'exhibit-repair',
+      name: '修复中心',
+      position: { x: 510, y: 620 },
+      size: { width: 180, height: 80 },
+      era: 'entrance',
+      description: '扮演数字修复师，修复珍贵的老动画胶片',
+      linkPath: '/repair-center',
+    },
   ],
   npcs,
   obstacles: [

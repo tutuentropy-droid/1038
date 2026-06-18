@@ -456,6 +456,8 @@ export interface TechMilestone {
   visual: string;
   requiredEra: TechEra;
   cost: number;
+  grantTools: string[];
+  grantCapabilities: string[];
 }
 
 export interface StylePhase {

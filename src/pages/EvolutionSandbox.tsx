@@ -63,6 +63,12 @@ export const EvolutionSandbox = () => {
   const [detailType, setDetailType] = useState<'milestone' | 'tool' | 'capability' | 'era'>('era');
   const [detailId, setDetailId] = useState<string | null>(null);
   const [autoEvolve, setAutoEvolve] = useState(false);
+  const [grantToast, setGrantToast] = useState<{
+    show: boolean;
+    milestoneName: string;
+    tools: { id: string; name: string; icon: string }[];
+    capabilities: { id: string; name: string; icon: string }[];
+  }>({ show: false, milestoneName: '', tools: [], capabilities: [] });
 
   const phase = STYLE_PHASES[currentEra];
 
@@ -83,6 +89,35 @@ export const EvolutionSandbox = () => {
   const closeDetail = () => {
     setShowDetail(false);
     setDetailId(null);
+  };
+
+  const handleUnlockMilestone = (milestoneId: string) => {
+    const result = actions.unlockMilestone(milestoneId);
+    if (result.success) {
+      const milestone = TECH_MILESTONES[milestoneId];
+      const tools = result.grantedTools
+        .map((id) => PRODUCTION_TOOLS[id])
+        .filter(Boolean)
+        .map((t) => ({ id: t.id, name: t.name, icon: t.icon }));
+      const capabilities = result.grantedCapabilities
+        .map((id) => VISUAL_CAPABILITIES[id])
+        .filter(Boolean)
+        .map((c) => ({ id: c.id, name: c.name, icon: c.icon }));
+
+      setGrantToast({
+        show: true,
+        milestoneName: milestone.name,
+        tools,
+        capabilities,
+      });
+
+      setTimeout(() => {
+        setGrantToast((prev) => ({ ...prev, show: false }));
+      }, 5000);
+
+      closeDetail();
+    }
+    return result.success;
   };
 
   const canUnlockNextEra = useMemo(() => {
@@ -131,11 +166,7 @@ export const EvolutionSandbox = () => {
           ? {
               label: `解锁 (${m.cost} RP)`,
               disabled: researchPoints < m.cost,
-              onClick: () => {
-                if (actions.unlockMilestone(detailId)) {
-                  closeDetail();
-                }
-              },
+              onClick: () => handleUnlockMilestone(detailId),
             }
           : unlockedMilestones.includes(detailId)
           ? { label: '已解锁 ✓', disabled: true, onClick: () => {} }
@@ -380,7 +411,7 @@ export const EvolutionSandbox = () => {
                 isUnlocked={isUnlocked}
                 canAfford={canAfford}
                 onClick={() => openDetail('milestone', m.id)}
-                onUnlock={() => actions.unlockMilestone(m.id)}
+                onUnlock={() => handleUnlockMilestone(m.id)}
               />
             );
           })}
@@ -844,6 +875,62 @@ export const EvolutionSandbox = () => {
                 ) : null}
                 {detailContent.action.label}
               </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {grantToast.show && (
+        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[60] animate-slide-up" style={{ animationFillMode: 'forwards' }}>
+          <div className="glass-card px-6 py-5 shadow-2xl border border-yellow-400/30 min-w-[360px] max-w-[440px]">
+            <div className="flex items-center gap-3 mb-4 pb-4 border-b border-white/10">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                <Sparkles className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <div className="text-xs font-medium text-yellow-400 mb-1">里程碑解锁成功</div>
+                <div className="font-bold text-lg text-white">{grantToast.milestoneName}</div>
+              </div>
+            </div>
+
+            {grantToast.capabilities.length > 0 && (
+              <div className="mb-4">
+                <div className="text-xs font-medium text-pink-400 mb-2 flex items-center gap-1.5">
+                  <Eye className="w-3.5 h-3.5" />
+                  解锁新表现能力
+                </div>
+                <div className="space-y-1.5">
+                  {grantToast.capabilities.map((cap) => (
+                    <div key={cap.id} className="flex items-center gap-3 px-3 py-2 rounded-lg bg-pink-500/10 border border-pink-500/20">
+                      <span className="text-xl">{cap.icon}</span>
+                      <span className="text-sm font-medium text-white">{cap.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {grantToast.tools.length > 0 && (
+              <div>
+                <div className="text-xs font-medium text-cyan-400 mb-2 flex items-center gap-1.5">
+                  <Wrench className="w-3.5 h-3.5" />
+                  解锁新制作工具
+                </div>
+                <div className="space-y-1.5">
+                  {grantToast.tools.map((tool) => (
+                    <div key={tool.id} className="flex items-center gap-3 px-3 py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20">
+                      <span className="text-xl">{tool.icon}</span>
+                      <span className="text-sm font-medium text-white">{tool.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {grantToast.tools.length === 0 && grantToast.capabilities.length === 0 && (
+              <div className="text-sm text-white/60 text-center py-2">
+                已记录该技术节点，继续探索下一个里程碑吧！
+              </div>
             )}
           </div>
         </div>

@@ -10,6 +10,25 @@ import {
 
 const STORAGE_KEY = 'evolution_sandbox_state';
 
+const buildFreshInitialState = (): SandboxState => {
+  const firstEra = ERA_ORDER[0];
+  return {
+    currentEra: firstEra,
+    unlockedEras: [firstEra],
+    researchPoints: 500,
+    totalResearchPoints: 500,
+    unlockedMilestones: [],
+    unlockedCapabilities: [],
+    unlockedTools: [],
+    currentView: 'timeline',
+    selectedMilestone: null,
+    selectedTool: null,
+    selectedCapability: null,
+    eraTransitionProgress: 0,
+    isTransitioning: false,
+  };
+};
+
 const getInitialState = (): SandboxState => {
   if (typeof window !== 'undefined') {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -21,25 +40,7 @@ const getInitialState = (): SandboxState => {
       }
     }
   }
-
-  const firstEra = ERA_ORDER[0];
-  const firstPhase = STYLE_PHASES[firstEra];
-
-  return {
-    currentEra: firstEra,
-    unlockedEras: [firstEra],
-    researchPoints: 500,
-    totalResearchPoints: 500,
-    unlockedMilestones: [],
-    unlockedCapabilities: [...firstPhase.unlockedCapabilities],
-    unlockedTools: [...firstPhase.unlockedTools],
-    currentView: 'timeline',
-    selectedMilestone: null,
-    selectedTool: null,
-    selectedCapability: null,
-    eraTransitionProgress: 0,
-    isTransitioning: false,
-  };
+  return buildFreshInitialState();
 };
 
 interface EvolutionSandboxStore extends SandboxState {
@@ -47,7 +48,7 @@ interface EvolutionSandboxStore extends SandboxState {
   actions: {
     setCurrentView: (view: SandboxState['currentView']) => void;
     selectEra: (era: TechEra) => void;
-    unlockMilestone: (milestoneId: string) => boolean;
+    unlockMilestone: (milestoneId: string) => { success: boolean; grantedTools: string[]; grantedCapabilities: string[] };
     unlockNextEra: () => boolean;
     addResearchPoints: (amount: number) => void;
     selectMilestone: (id: string | null) => void;
@@ -119,21 +120,32 @@ export const useEvolutionSandboxStore = create<EvolutionSandboxStore>((set, get)
 
       unlockMilestone: (milestoneId) => {
         const milestone = TECH_MILESTONES[milestoneId];
-        if (!milestone) return false;
+        if (!milestone) return { success: false, grantedTools: [], grantedCapabilities: [] };
 
         const state = get();
-        if (state.unlockedMilestones.includes(milestoneId)) return false;
+        if (state.unlockedMilestones.includes(milestoneId)) return { success: false, grantedTools: [], grantedCapabilities: [] };
 
-        if (!state.unlockedEras.includes(milestone.requiredEra)) return false;
+        if (!state.unlockedEras.includes(milestone.requiredEra)) return { success: false, grantedTools: [], grantedCapabilities: [] };
 
-        if (state.researchPoints < milestone.cost) return false;
+        if (state.researchPoints < milestone.cost) return { success: false, grantedTools: [], grantedCapabilities: [] };
+
+        const grantedTools = milestone.grantTools.filter(
+          (toolId) => !state.unlockedTools.includes(toolId)
+        );
+        const grantedCapabilities = milestone.grantCapabilities.filter(
+          (capId) => !state.unlockedCapabilities.includes(capId)
+        );
 
         const newResearchPoints = state.researchPoints - milestone.cost;
         const newUnlockedMilestones = [...state.unlockedMilestones, milestoneId];
+        const newUnlockedTools = [...state.unlockedTools, ...grantedTools];
+        const newUnlockedCapabilities = [...state.unlockedCapabilities, ...grantedCapabilities];
 
         set({
           researchPoints: newResearchPoints,
           unlockedMilestones: newUnlockedMilestones,
+          unlockedTools: newUnlockedTools,
+          unlockedCapabilities: newUnlockedCapabilities,
         });
 
         saveState();
@@ -141,7 +153,7 @@ export const useEvolutionSandboxStore = create<EvolutionSandboxStore>((set, get)
         const newState = get();
         set({ stats: computeStats(newState) });
 
-        return true;
+        return { success: true, grantedTools, grantedCapabilities };
       },
 
       unlockNextEra: () => {
@@ -150,7 +162,6 @@ export const useEvolutionSandboxStore = create<EvolutionSandboxStore>((set, get)
         if (currentIndex >= ERA_ORDER.length - 1) return false;
 
         const nextEra = ERA_ORDER[currentIndex + 1];
-        const nextPhase = STYLE_PHASES[nextEra];
 
         if (state.unlockedEras.includes(nextEra)) {
           set({ currentEra: nextEra });
@@ -169,18 +180,10 @@ export const useEvolutionSandboxStore = create<EvolutionSandboxStore>((set, get)
         }
 
         const newUnlockedEras = [...state.unlockedEras, nextEra];
-        const newCapabilities = Array.from(
-          new Set([...state.unlockedCapabilities, ...nextPhase.unlockedCapabilities])
-        );
-        const newTools = Array.from(
-          new Set([...state.unlockedTools, ...nextPhase.unlockedTools])
-        );
         const bonusPoints = 800;
 
         set({
           unlockedEras: newUnlockedEras,
-          unlockedCapabilities: newCapabilities,
-          unlockedTools: newTools,
           researchPoints: state.researchPoints + bonusPoints,
           totalResearchPoints: state.totalResearchPoints + bonusPoints,
           currentEra: nextEra,
@@ -232,9 +235,11 @@ export const useEvolutionSandboxStore = create<EvolutionSandboxStore>((set, get)
       },
 
       resetAll: () => {
-        const reset = getInitialState();
-        set({ ...reset, stats: computeStats(reset) });
-        saveState();
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem(STORAGE_KEY);
+        }
+        const fresh = buildFreshInitialState();
+        set({ ...fresh, stats: computeStats(fresh) });
       },
 
       saveState,
